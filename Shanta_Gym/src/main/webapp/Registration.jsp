@@ -20,7 +20,7 @@
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="card shadow-lg" style="max-width: 600px; width: 100%;">
             <div class="card-body">
-                <h2 class="card-title text-center mb-4">Registration</h2>
+                <h2 class="card-title text-center mb-4">Registration Form</h2>
                 <form action="register" method="post">
                     <div class="mb-2">
                         <label for="name" class="form-label">Name</label>
@@ -54,7 +54,7 @@
                    <input type="number" class="form-control" id="balance" name="balance" required>
                      <label for="installment" class="form-label">Installment</label>
                     <input type="text" class="form-control" id="installment" name="installment" required>
-                </div>
+               </div>
 
                     <button type="submit" class="btn btn-info w-100">Submit</button>
                     <a href="Update.jsp">Update</a>

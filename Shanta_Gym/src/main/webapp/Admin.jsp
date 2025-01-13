@@ -22,7 +22,13 @@
         <div class="card shadow-lg" style="max-width: 400px; width: 100%;">
             <div class="card-body">
                 <h2 class="card-title text-center mb-4">Admin Login</h2>
+
                 <form action="signIn" method="post">
+                  <div class="mb-3">
+                      <label for="name" class="form-label">Name</label>
+                      <input type="name" class="form-control" id="name" name="name" required>
+                  </div>
+
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" name="email" required>
@@ -34,9 +40,12 @@
 
                     <button type="submit" class="btn btn-success w-100">Login</button>
 
-                    <a href="Enquiry.jsp">For Enquiry</a> </br>
-                    <a href="follow.jsp">FollowUp</a></br>
-                    <a href="Registration.jsp">Registration</a>
+
+
+                       <div class="register">
+                             <p>Don't have an account? <a href="Registration.jsp">Register</a></p>
+                       </div>
+
                 </form>
             </div>
         </div>

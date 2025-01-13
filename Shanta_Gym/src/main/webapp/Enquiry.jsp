@@ -21,7 +21,9 @@
         <div class="card shadow-lg" style="max-width: 400px; width: 100%;">
             <div class="card-body">
                 <h2 class="card-title text-center mb-4">Enquiry page</h2>
+
                 <form action="enquiry" method="post">
+
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="name" name="name" required>
@@ -43,10 +45,6 @@
                         <input type="number" class="form-control" id="age" name="age" required>
                   </div>
 
-                <div class="mb-3">
-                     <label for="status" class="form-label">Status</label>
-                    <input type="text" class="form-control" id="status" name="status" required>
-                </div>
                     <button type="submit" class="btn btn-success w-100">Submit</button>
                 </form>
             </div>
