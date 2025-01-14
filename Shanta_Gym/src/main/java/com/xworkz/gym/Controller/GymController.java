@@ -1,6 +1,7 @@
 package com.xworkz.gym.Controller;
 
 import com.xworkz.gym.DTO.EnquiryDto;
+import com.xworkz.gym.DTO.FollowDto;
 import com.xworkz.gym.DTO.GymDto;
 import com.xworkz.gym.service.GymService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class GymController {
         boolean isSaved = service.savedData(dto);
         if(isSaved){
             model.addAttribute("msg","admin login is Succussfully done");
-            return "Enquiry";
+            return "Success";
         } else {
             model.addAttribute("error", "login is failure");
             return "Admin";
@@ -42,6 +43,19 @@ public class GymController {
             model.addAttribute("error","Enquiry failed");
             return "Enquiry";
         }
+    }
+
+    @PostMapping("/follow")
+    public String onFollow(EnquiryDto dto){
+        System.out.println("onFollow in GymController");
+
+       boolean isFollow  = service.saveEnquiry(dto);
+
+       if(isFollow){
+           System.out.println("follow is successfully");
+           return "Registration";
+       }
+        return "follow";
     }
 
 }
