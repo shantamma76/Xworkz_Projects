@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 
 public class FollowDto {
 
-    private String resonse;
+    private String reason;
     private String status;
 }

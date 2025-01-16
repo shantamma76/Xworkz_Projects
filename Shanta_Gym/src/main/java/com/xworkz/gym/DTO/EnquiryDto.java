@@ -11,8 +11,7 @@ public class EnquiryDto {
     private long phone;
     private int distance;
     private int age;
+    //private String status;
 
-    private String resonse;
-    private String status;
 
 }

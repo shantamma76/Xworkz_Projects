@@ -15,7 +15,6 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan("com.xworkz.gym")
 @EnableWebMvc
-
 public class GymConfiguration {
 
     GymConfiguration(){

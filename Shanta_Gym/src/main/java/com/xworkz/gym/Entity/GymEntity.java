@@ -9,6 +9,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @Table(name="admin_table")
 
+@NamedQuery(name="getNameByEmailAndPassword", query="select p.name from GymEntity p where p.email = :byEmail AND p.password = :byPassword")
 public class GymEntity {
 
     @Id
@@ -18,5 +19,7 @@ public class GymEntity {
     private String name;
     private String email;
     private String password;
+
 }
+
 

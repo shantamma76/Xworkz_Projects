@@ -9,6 +9,11 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @Table(name="enquiry_table")
+
+//@NamedQuery(name = "updateStatusAndReasons", query = "update EnquiryEntity p set p.reason = :setReason, p.status = :setStatus where p.name = :byName")
+//
+//@NamedQuery(name = "getAllUser", query = "SELECT e FROM EnquiryEntity e ")
+
 public class EnquiryEntity {
 
     @Id
@@ -23,6 +28,6 @@ public class EnquiryEntity {
     private int distance;
     private int age;
 
-    private String resonse;
     private String status;
+    private String reason;
 }
