@@ -1,18 +1,17 @@
 package com.xworkz.gym.service;
 
 import com.xworkz.gym.DTO.EnquiryDto;
-import com.xworkz.gym.DTO.GymDto;
+import com.xworkz.gym.DTO.RegisterDto;
 import com.xworkz.gym.Entity.EnquiryEntity;
+import com.xworkz.gym.Entity.RegisterEntity;
 import com.xworkz.gym.constants.StatusEnum;
 import com.xworkz.gym.repository.GymRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class GymServiceImpl implements GymService {
@@ -67,49 +66,37 @@ public class GymServiceImpl implements GymService {
         return false;
     }
 
-//    @Override
-//    public List<EnquiryEntity> getEnquiriesByStatus(String status) {
-//        return repository.getEnquiriesByStatus(status);  // Call the repository method to fetch based on status.
-//
+    @Override
+    public boolean saveRegister(RegisterDto registerDto) {
+        System.out.println("saveRegister in GymServiceImpl");
 
-//    @Override
-//    public List<EnquiryDto> getAll() {
-//        System.out.println("getAll in GymServiceImpl");
-//        List<EnquiryEntity> allValues= repository.getAll();
-//        System.out.println("//////////////from repo the values arer/.."+allValues);
-//        ArrayList<EnquiryDto> value = new ArrayList<>();
-//        allValues.forEach(y->{
-//            EnquiryDto dto = new EnquiryDto();
-//            BeanUtils.copyProperties(y,dto);
-//            value.add(dto);
-//        });
-//        System.out.println("   in service method..     "+value);
-//        return value;
-//    }
+        RegisterEntity entity = new RegisterEntity();
+        entity.setName(registerDto.getName());
+        entity.setEmail(registerDto.getEmail());
+        entity.setPassword(registerDto.getPassword());
+        entity.setPackages(registerDto.getPackages());
+        entity.setTrainer(registerDto.getTrainer());
+        entity.setPhone(registerDto.getPhone());
+        entity.setAmount(registerDto.getAmount());
+        entity.setDiscount(registerDto.getDiscount());
+        entity.setGymName(registerDto.getGymName());
+        entity.setPaid(registerDto.getPaid());
+        entity.setBalance(registerDto.getBalance());
+        entity.setInstallment(registerDto.getInstallment());
 
-//    @Override
-//    public boolean savedData(EnquiryDto enquiryDto) {
-//        System.out.println("savedData in GymServiceImpl");
-//
-//        EnquiryEntity entity = new EnquiryEntity();
-//
-//        entity.setName(enquiryDto.getName());
-//        entity.setArea(enquiryDto.getArea());
-//        entity.setPhone(enquiryDto.getPhone());
-//        entity.setDistance(enquiryDto.getDistance());
-//        entity.setAge(enquiryDto.getAge());
-//        entity.setStatus(String.valueOf(StatusEnum.Enquired));
-//
-//        boolean enquiry = repository.savedData(entity);
-//        if(enquiry){
-//            System.out.println("data Data is updated");
-//            return true;
-//        }
-//        System.out.println("Data not is updated");
-//        return false;
-//    }
+        boolean saves = repository.saveRegister(entity);
+        if(saves){
+            System.out.println("register data is saved");
+            return true;
+        }
+        System.out.println("register data is not saved");
+        return false;
+    }
 
-
-
+    @Override
+    public boolean updateDetails(String packages, RegisterDto registerDto) {
+        System.out.println("updateDetails in GymServiceImpl");
+        return repository.updateDetails(packages, registerDto);
+    }
 
 }

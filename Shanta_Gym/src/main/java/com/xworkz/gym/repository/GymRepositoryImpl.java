@@ -1,14 +1,14 @@
 package com.xworkz.gym.repository;
 
+import com.xworkz.gym.DTO.RegisterDto;
 import com.xworkz.gym.Entity.EnquiryEntity;
 
 
-import com.xworkz.gym.Entity.GymEntity;
+import com.xworkz.gym.Entity.RegisterEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
-import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -35,7 +35,6 @@ public class GymRepositoryImpl implements GymRepository {
                 System.out.println("result is not null");
                 return true;
             }
-
             System.out.println("it is null");
             return false;
         } catch (Exception e) {
@@ -53,7 +52,6 @@ public class GymRepositoryImpl implements GymRepository {
         System.out.println("Running saveEnquiry in GymRepositoryImpl");
         EntityManager entityManager = emf.createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
-
         try {
             entityTransaction.begin();
             entityManager.persist(enquiryEntity);
@@ -118,50 +116,61 @@ public class GymRepositoryImpl implements GymRepository {
 
         return isUpdated;
     }
+
+    @Override
+    public boolean saveRegister(RegisterEntity registerEntity) {
+        EntityManager entityManager = emf.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+
+        try {
+            entityTransaction.begin();
+            entityManager.persist(registerEntity);
+            entityTransaction.commit();
+            return true;
+        } catch (Exception e){
+            if(entityTransaction.isActive()){
+                entityTransaction.rollback();
+            }
+            return false;
+        }
+        finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public boolean updateDetails(String packages, RegisterDto registerDto) {
+        System.out.println("updateDetails in GymRepositoryImpl:" + registerDto.toString());
+        EntityManager entityManager = emf.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        boolean isUpdated = false;
+
+        try {
+            entityTransaction.begin();
+            int value = entityManager.createNamedQuery("updatedDetailsByName")
+                    .setParameter("packagesBy", registerDto.getPackages())
+                    .setParameter("trainerBy", registerDto.getTrainer())
+                    .setParameter("amountBy", registerDto.getAmount())
+                    .setParameter("balanceBy", registerDto.getBalance())
+                    .setParameter("packagesBy", packages)
+                    .executeUpdate();
+
+            isUpdated = value > 0;
+            entityTransaction.commit();
+        } catch (Exception e) {
+            if (entityTransaction.isActive()) {
+                entityTransaction.rollback();
+            }
+        } finally {
+            entityManager.close();
+        }
+
+        return isUpdated;
+    }
+
 }
 
-//    @Override
-//    public boolean savedData(EnquiryEntity enquiryEntity) {
-//        System.out.println("savedData in GymRepositoryImpl");
-//        EntityManager entityManager = emf.createEntityManager();
-//        EntityTransaction entityTransaction = entityManager.getTransaction();
-//
-//        try {
-//            entityTransaction.begin();
-//            entityManager.persist(enquiryEntity);
-//            entityTransaction.commit();
-//            return true;
-//        } catch (Exception e) {
-//            if (entityTransaction.isActive()) {
-//                entityTransaction.rollback();
-//            }
-//            return false;
-//        } finally {
-//            entityManager.close();
-//        }
-//    }
 
-
-//    @Override
-//    public boolean saveFollow(FollowEntity followEntity) {
-//        System.out.println("saveFollow in GymRepositoryImpl");
-//        EntityManager entityManager = emf.createEntityManager();
-//        EntityTransaction entityTransaction = entityManager.getTransaction();
-//
-//        try {
-//            entityTransaction.begin();
-//            entityManager.persist(followEntity);
-//            entityTransaction.commit();
-//            return true;
-//        } catch (Exception e) {
-//            if (entityTransaction.isActive()) {
-//                entityTransaction.rollback();
-//            }
-//            return false;
-//        } finally {
-//            entityManager.close();
-//        }
-//    }
 
 
 

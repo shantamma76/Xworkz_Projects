@@ -1,15 +1,13 @@
 package com.xworkz.gym.DTO;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class EnquiryDto {
+public class AdminDto {
 
     private String name;
-    private String area;
-    private long phone;
-    private int distance;
-    private int age;
-
+    private String email;
+    private String password;
 }

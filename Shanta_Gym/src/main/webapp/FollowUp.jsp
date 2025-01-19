@@ -5,19 +5,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Follow-Up Page</title>
+    <title>FollowUp Page</title>
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Roboto', Arial, sans-serif;
-            background-color: #1c1e26; /* Dark background for contrast */
+            background-image: url('https://img.freepik.com/premium-photo/empty-gym-with-treadmills_564714-18757.jpg');
             margin: 0;
             padding: 20px;
-            color: #f9f9f9; /* Light text for contrast */
+            color: #f9f9f9;
         }
 
         h1 {
             text-align: center;
-            color: #f39c12; /* Vibrant orange for headings */
+            color: black;
             font-size: 2em;
             margin-bottom: 20px;
             text-transform: uppercase;
@@ -26,13 +28,13 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: #2c2f38; /* Slightly lighter dark for contrast */
+            background: white;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             padding: 20px;
         }
 
-.search-bar {
+        .search-bar {
             margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
@@ -44,7 +46,7 @@
         .search-bar label {
             font-size: 1rem;
             font-weight: bold;
-            color: #f39c12;
+            color: black;
         }
 
         .search-bar select {
@@ -52,8 +54,8 @@
             font-size: 1rem;
             border: 1px solid #7f8c8d;
             border-radius: 5px;
-            background-color: #2c2f38;
-            color: #f9f9f9;
+            background-color: white;
+            color: black;
         }
 
         .search-bar .btn {
@@ -67,8 +69,8 @@
             transition: background-color 0.3s ease;
         }
 
- .search-bar .btn:hover {
-            background-color: #2980b9;
+        .search-bar .btn:hover {
+            background-color: green;
         }
 
         table {
@@ -84,37 +86,40 @@
         }
 
         th {
-            background-color: #16a085; /* Contrasting green for table headers */
+            background-color: darkblue;
             color: white;
             text-transform: uppercase;
             font-size: 0.9rem;
         }
 
         tr:nth-child(even) {
-            background-color: #2c2f38;
+            background-color: white;
+            color: black;
         }
 
         tr:nth-child(odd) {
-            background-color: #1c1e26;
+            background-color: white;
+            color: black;
         }
 
         tr:hover {
-            background-color: #34495e; /* Highlight row on hover */
+            background-color: pink; /* Highlight row on hover */
         }
-td select, td input {
+
+        td select, td input {
             padding: 5px;
             font-size: 0.9rem;
             border: 1px solid #7f8c8d;
             border-radius: 5px;
             width: 90%;
-            background-color: #1c1e26;
-            color: #f9f9f9;
+            background-color: white;
+            color: black;
         }
 
         td .btn {
             font-size: 0.8rem;
             padding: 5px 10px;
-            background-color: #e74c3c; /* Vibrant red for buttons */
+            background-color: green; /* Vibrant red for buttons */
             color: white;
             border: none;
             border-radius: 5px;
@@ -134,22 +139,64 @@ td select, td input {
             .search-bar {
                 flex-direction: column;
                 align-items: flex-start;
-         }
+            }
 
             .search-bar label {
                 margin-bottom: 10px;
             }
         }
+
+        /* Navbar styling */
+        .navbar {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background-color: #333;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 30px; /* Added margin for spacing below the navbar */
+        }
+
+        .navbar li {
+            padding: 15px;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar a i {
+            margin-right: 8px;
+        }
+
+        .navbar a:hover {
+            background-color: #555;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
+  <!-- Navigation Menu -->
+    <ul class="navbar">
+        <li><a href="index.jsp"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="Enquiry.jsp"><i class="fas fa-question-circle"></i> Enquiry</a></li>
+        <li><a href="search"><i class="fas fa-search"></i> Follow Up</a></li>
+        <li><a href="Registration.jsp"><i class="fas fa-user-plus"></i> Register</a></li>
+        <li><a href="Update.jsp"><i class="fas fa-edit"></i> Update</a></li>
+    </ul>
+
     <div class="container">
-        <h1>Follow-Up Records</h1>
+        <h1>FollowUp List</h1>
 
         <!-- Search Bar -->
         <div class="search-bar">
             <form action="search" method="post">
-                <label for="status">Filter by Status:</label>
+                <label for="status"><i class="fas fa-filter"></i> Filter by Status:</label>
                 <select name="status" id="status">
                     <option value="">--Select Status--</option>
                     <c:forEach var="status" items="${statusOptions}">
@@ -158,7 +205,7 @@ td select, td input {
                         </option>
                     </c:forEach>
                 </select>
-                <button type="submit" class="btn">Search</button>
+                <button type="submit" class="btn"><i class="fas fa-search"></i> Search</button>
             </form>
         </div>
 
@@ -167,7 +214,7 @@ td select, td input {
                 <tr>
                     <th>Name</th>
                     <th>Area</th>
-                    <th>PhoneNo</th>
+                    <th>Phone No</th>
                     <th>Distance</th>
                     <th>Age</th>
                     <th>Status</th>
@@ -198,9 +245,9 @@ td select, td input {
                             </td>
                             <td>
                                 <input type="hidden" name="name" value="${enquiry.name}" />
-                                <button type="submit" class="btn">Update</button>
+                                <button type="submit" class="btn"><i class="fas fa-edit"></i> Update</button>
                             </td>
-                         </form>
+                        </form>
                     </tr>
                 </c:forEach>
             </tbody>

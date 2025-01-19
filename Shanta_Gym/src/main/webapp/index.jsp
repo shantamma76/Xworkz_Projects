@@ -22,8 +22,8 @@
 
         /* Navbar */
         .navbar {
-            background-color: rgba(46, 58, 71, 0.9); /* Semi-transparent background */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            background-color:gray; /* Semi-transparent background */
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
             z-index: 1;
         }
 
@@ -39,7 +39,7 @@
         }
 
         .nav-link:hover {
-            color: #ffd700 !important;
+            color: blue !important;
             text-decoration: underline;
         }
 
@@ -98,7 +98,7 @@
 
         /* Footer */
         .footer {
-            background-color: #2e3a47;
+            background-color: gray;
             color: white;
             padding: 20px 0;
             text-align: center;
