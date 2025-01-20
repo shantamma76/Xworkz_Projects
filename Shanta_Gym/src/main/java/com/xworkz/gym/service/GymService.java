@@ -19,7 +19,9 @@ public interface GymService {
 
     boolean saveRegister(RegisterDto registerDto);
 
-    boolean updateDetails(String packages,RegisterDto registerDto);
+//    boolean updateDetails(String name,RegisterDto registerDto);
+
+    boolean updateRegister(RegisterDto registerDto,String name,long phone);
 
 
 

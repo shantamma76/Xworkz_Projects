@@ -1,3 +1,4 @@
+<%@page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,7 +112,14 @@
         <li><a href="Update.jsp"><i class="fas fa-edit"></i>Update</a></li>
     </ul>
 
-    <h1>Login Successfully Done!</h1>
+    <h1>Login Successfully Done!</h1> <br>
+
+      <!-- Upadte profile form below -->
+            <form action="updates" method="get">
+            <input type="text" name="name" value="${name}"/>
+            <input type="submit" value="update signup">
+            </form>
+        </div>
 
 </body>
 </html>

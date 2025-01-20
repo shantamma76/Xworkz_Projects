@@ -94,9 +94,27 @@ public class GymServiceImpl implements GymService {
     }
 
     @Override
-    public boolean updateDetails(String packages, RegisterDto registerDto) {
-        System.out.println("updateDetails in GymServiceImpl");
-        return repository.updateDetails(packages, registerDto);
+    public boolean updateRegister(RegisterDto registerDto, String name, long phone) {
+        System.out.println("updateRegister in serviceImpl");
+
+        RegisterEntity entity = repository.updateRegister(name,phone);
+        if(entity != null) {
+            entity.setPackages(registerDto.getPackages());
+            entity.setTrainer(registerDto.getTrainer());
+            entity.setAmount(registerDto.getAmount());
+            entity.setBalance(registerDto.getBalance());
+
+            repository.saveRegister(entity);
+            return true;
+        }
+        return false;
     }
+
+//    @Override
+//    public boolean updateDetails(String name, RegisterDto registerDto) {
+//        System.out.println("In Service layer - UpdateDetails: " + registerDto);
+////        registerDto.setName(name);
+//        return repository.updateDetails(name,registerDto);
+//    }
 
 }

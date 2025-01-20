@@ -16,7 +16,9 @@ public interface GymRepository {
 
     boolean saveRegister(RegisterEntity registerEntity);
 
-    boolean updateDetails(String packages,RegisterDto registerDto);
+//    boolean updateDetails(String name,RegisterDto registerDto);
+
+    public RegisterEntity updateRegister(String name, long phone);
 
 
 }

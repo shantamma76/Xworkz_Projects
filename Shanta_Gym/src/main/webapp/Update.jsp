@@ -75,10 +75,17 @@
             <div class="card-body">
                 <h2 class="card-title text-center mb-4">Update Profile</h2>
 
-                <form action="update" method="get">
+                <form action="update" method="post">
+
                     <div class="mb-2">
+                         <label for="name" class="form-label"><i class="fas fa-user"></i> Name</label>
+                         <input type="text" class="form-control" id="name" name="name" required>
+
+                         <label for="phone" class="form-label"><i class="fas fa-phone-alt"></i>Phone No</label>
+                         <input type="number" class="form-control" id="phone" name="phone" required>
+
                         <label for="package" class="form-label"><i class="fas fa-gift"></i> Package</label>
-                        <input type="text" class="form-control" id="package" name="package" required>
+                        <input type="text" class="form-control" id="packages" name="packages" required>
 
                         <label for="trainer" class="form-label"><i class="fas fa-chalkboard-teacher"></i> Trainer</label>
                         <input type="text" class="form-control" id="trainer" name="trainer" required>
@@ -88,9 +95,10 @@
 
                         <label for="balance" class="form-label"><i class="fas fa-calculator"></i> Balance</label>
                         <input type="number" class="form-control" id="balance" name="balance" required>
+
                     </div>
 
-                    <button type="submit" class="btn btn-info w-100"><i class="fas fa-sync-alt"></i> Update</button>
+                    <button type="submit" class="btn btn-info w-100"><i class="fas fa-sync-alt"></i>Update</button>
                 </form>
             </div>
         </div>

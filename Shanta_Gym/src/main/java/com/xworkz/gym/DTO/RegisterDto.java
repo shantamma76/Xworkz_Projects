@@ -3,8 +3,6 @@ package com.xworkz.gym.DTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.NamedQuery;
-
 @Data
 @NoArgsConstructor
 public class RegisterDto {

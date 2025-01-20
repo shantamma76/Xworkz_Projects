@@ -84,7 +84,7 @@
                 <form action="register" method="post">
                     <div class="mb-2">
                         <label for="name" class="form-label"><i class="fas fa-user"></i> Name</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <input type="text" class="form-control" id="name" name="name"  required>
 
                         <label for="email" class="form-label"><i class="fas fa-envelope"></i> Email</label>
                         <input type="email" class="form-control" id="email" name="email" required>

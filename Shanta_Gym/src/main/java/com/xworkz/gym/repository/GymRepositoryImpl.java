@@ -124,7 +124,7 @@ public class GymRepositoryImpl implements GymRepository {
 
         try {
             entityTransaction.begin();
-            entityManager.persist(registerEntity);
+            entityManager.merge(registerEntity);
             entityTransaction.commit();
             return true;
         } catch (Exception e){
@@ -139,34 +139,67 @@ public class GymRepositoryImpl implements GymRepository {
     }
 
     @Override
-    public boolean updateDetails(String packages, RegisterDto registerDto) {
-        System.out.println("updateDetails in GymRepositoryImpl:" + registerDto.toString());
+    public RegisterEntity updateRegister(String name, long phone) {
+        System.out.println("findByNameAndPhone in GymRepositoryImpl");
         EntityManager entityManager = emf.createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
-        boolean isUpdated = false;
+
+        String queryStr = "Select p FROM RegisterEntity p WHERE p.name = :nameBy AND p.phone = :phoneBy";
+        RegisterEntity result = null;
 
         try {
             entityTransaction.begin();
-            int value = entityManager.createNamedQuery("updatedDetailsByName")
-                    .setParameter("packagesBy", registerDto.getPackages())
-                    .setParameter("trainerBy", registerDto.getTrainer())
-                    .setParameter("amountBy", registerDto.getAmount())
-                    .setParameter("balanceBy", registerDto.getBalance())
-                    .setParameter("packagesBy", packages)
-                    .executeUpdate();
-
-            isUpdated = value > 0;
+            Query query = entityManager.createQuery(queryStr);
+            query.setParameter("nameBy",name);
+            query.setParameter("phoneBy",phone);
+            result = (RegisterEntity) query.getSingleResult();
             entityTransaction.commit();
-        } catch (Exception e) {
-            if (entityTransaction.isActive()) {
-                entityTransaction.rollback();
+
+        } catch (Exception e){
+            System.out.println("error in update:" +e.getMessage());
+            if(entityTransaction.isActive()) {
+                entityTransaction.isActive();
             }
         } finally {
             entityManager.close();
         }
-
-        return isUpdated;
+        return result;
     }
+
+
+//    @Override
+//    public boolean updateDetails(String name, RegisterDto registerDto) {
+//        System.out.println("updateDetails in GymRepositoryImpl:" + registerDto.toString());
+//        EntityManager entityManager = emf.createEntityManager();
+//        EntityTransaction entityTransaction = entityManager.getTransaction();
+//        boolean isUpdated = false;
+//        System.out.println("to know thje vslue of pscksge.."+registerDto.getPackages());
+//
+//        try {
+//            entityTransaction.begin();
+//
+//            int value = entityManager.createNamedQuery("updatedDetailsByName")
+//                    .setParameter("packagesBy", registerDto.getPackages())
+//                    .setParameter("trainerBy", registerDto.getTrainer())
+//                    .setParameter("amountBy", registerDto.getAmount())
+//                    .setParameter("balanceBy", registerDto.getBalance())
+//                    .setParameter("nameBy", name)
+//                    .executeUpdate();
+//            System.out.println("==================RepoImpl============");
+//            isUpdated = value > 0;
+//            entityTransaction.commit();
+//
+//
+//        } catch (Exception e) {
+//            if (entityTransaction.isActive()) {
+//                entityTransaction.rollback();
+//            }
+//        } finally {
+//            entityManager.close();
+//        }
+//
+//        return isUpdated;
+//    }
 
 }
 

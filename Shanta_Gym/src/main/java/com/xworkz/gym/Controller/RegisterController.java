@@ -24,6 +24,7 @@ public class RegisterController {
         boolean saveData = service.saveRegister(dto);
         if (saveData) {
             model.addAttribute("msg", "saved");
+            model.addAttribute("name",dto.getName());
             return "Success";
         } else {
             model.addAttribute("error", "Not Saved");
@@ -31,16 +32,44 @@ public class RegisterController {
         }
     }
 
-    @GetMapping("/update")
-    public String updateDetails(@RequestParam String name, RegisterDto dto, Model model) {
-        System.out.println("updateDetails in RegisterController");
-        boolean result = service.updateDetails(name, dto);
-        if (result) {
-            model.addAttribute("msg", "Update successful!");
-            return "Success"; // success view
-        } else {
-            model.addAttribute("error", "Update failed. User not found or no changes made.");
-            return "Update"; // update form view
+//    @PostMapping("/update")
+//    public String updateDetails(@RequestParam String name, RegisterDto dto, Model model) {
+//        System.out.println("updateDetails in controller " +dto);
+//        boolean result = service.updateDetails(name,dto);
+//        if (result) {
+//            model.addAttribute("msg", "Update successful!");
+//            return "Success";
+//        } else {
+//            model.addAttribute("error", "Update failed. User not found or no changes made.");
+//            return "Update";
+//        }
+//    }
+
+//        @GetMapping("/updates")
+//        public String onUpdate(@RequestParam(required = false) String name, Model model) {
+//            model.addAttribute("name", name);
+//            return "Update";
+//        }
+
+    @PostMapping("/update")
+    public String updateRegisteration(RegisterDto registerDto,String name,long phone){
+        System.out.println("updateRegisteration in RegisterController");
+        boolean updated = service.updateRegister(registerDto,name,phone);
+        if(updated){
+            System.out.println("it is updated");
+            return "Success";
         }
+        System.out.println("it is not updated");
+        return "Update";
     }
-}
+
+
+
+    }
+
+
+
+
+
+
+
