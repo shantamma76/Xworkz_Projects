@@ -195,7 +195,7 @@
 
         <!-- Search Bar -->
         <div class="search-bar">
-            <form action="search" method="post">
+            <form action="search" method="get">
                 <label for="status"><i class="fas fa-filter"></i> Filter by Status:</label>
                 <select name="status" id="status">
                     <option value="">--Select Status--</option>
@@ -231,6 +231,7 @@
                             <td>${enquiry.phone}</td>
                             <td>${enquiry.distance}</td>
                             <td>${enquiry.age}</td>
+
                             <td>
                                 <select name="status">
                                     <c:forEach var="status" items="${statusOptions}">
@@ -240,13 +241,16 @@
                                     </c:forEach>
                                 </select>
                             </td>
+
                             <td>
                                 <input type="text" name="reason" value="${enquiry.reason}" />
                             </td>
+
                             <td>
                                 <input type="hidden" name="name" value="${enquiry.name}" />
                                 <button type="submit" class="btn"><i class="fas fa-edit"></i> Update</button>
                             </td>
+
                         </form>
                     </tr>
                 </c:forEach>

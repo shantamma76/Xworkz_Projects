@@ -1,5 +1,6 @@
 package com.xworkz.gym.Configuration;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan("com.xworkz.gym")
 @EnableWebMvc
+@Slf4j
 public class GymConfiguration {
 
     GymConfiguration(){
@@ -24,6 +26,7 @@ public class GymConfiguration {
     @Bean
     public LocalContainerEntityManagerFactoryBean localContEntMangFaBean(){
         LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
+        log.info("this is hp laptop======================================");
         bean.setPackagesToScan("com.xworkz.gym.Entity");
         bean.setDataSource(datasource());
         bean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());

@@ -10,6 +10,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name="enquiry_table")
 
+@NamedQuery(name="countByName", query = "select count(e) from EnquiryEntity e where e.name = :setName")
+@NamedQuery(name="countByArea", query = "select count(e) from EnquiryEntity e where e.area = :setArea")
+@NamedQuery(name="countByPhone", query = "select count(e) from EnquiryEntity e where e.phone = :setPhone")
+@NamedQuery(name="countByDistance", query = "select count(e) from EnquiryEntity e where e.distance = :setDistance")
+@NamedQuery(name="countByAge", query = "select count(e) from EnquiryEntity e where e.age = :setAge")
+
 public class EnquiryEntity {
 
     @Id

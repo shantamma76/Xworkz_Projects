@@ -84,29 +84,32 @@
                 <form action="register" method="post">
                     <div class="mb-2">
                         <label for="name" class="form-label"><i class="fas fa-user"></i> Name</label>
-                        <input type="text" class="form-control" id="name" name="name"  required>
+                        <input type="text" class="form-control" id="name" name="name" onChange="onNameChange()" required>
+                         <span id="nameDemo" style="color:red;"></span>
 
                         <label for="email" class="form-label"><i class="fas fa-envelope"></i> Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-
-                        <label for="password" class="form-label"><i class="fas fa-lock"></i> Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                        <input type="email" class="form-control" id="email" name="email" onChange="onEmailChange()" required>
+                         <span id="EmailDemo" style="color:red;"></span>
 
                         <label for="packages" class="form-label"><i class="fas fa-gift"></i> Packages</label>
                         <select class="form-control" id="packages" name="packages" required>
                             <option value="" data-amount="0">--select package--</option>
                             <option value="Silver" data-amount="30000">Silver - 30000</option>
                             <option value="Premium" data-amount="40000">Premium - 40000</option>
+                            <option value="Gold" data-amount="50000">Gold - 50000</option>
                         </select>
 
                         <label for="trainer" class="form-label"><i class="fas fa-chalkboard-teacher"></i> Trainer</label>
-                        <input type="text" class="form-control" id="trainer" name="trainer" required>
+                        <input type="text" class="form-control" id="trainer" name="trainer" onChange="onTrainerChange()" required>
+                        <span id="trainerDemo" style="color:red;"></span>
 
                         <label for="phone" class="form-label"><i class="fas fa-phone-alt"></i> Phone No</label>
-                        <input type="tel" class="form-control" id="phone" name="phone" required>
+                        <input type="tel" class="form-control" id="phone" name="phone" onChange="onPhoneChange()" required>
+                        <span id="phoneDemo" style="color:red;"></span>
 
                         <label for="gymName" class="form-label"><i class="fas fa-building"></i> Gym Name</label>
-                        <input type="text" class="form-control" id="gymName" name="gymName" required>
+                        <input type="text" class="form-control" id="gymName" name="gymName" onChange="onGymName()"  required>
+                        <span id="gymDemo" style="color:red;"></span>
 
                         <label for="amount" class="form-label"><i class="fas fa-dollar-sign"></i> Amount</label>
                         <input type="number" step="0.01" class="form-control" id="amount" name="amount" readonly required>
@@ -115,14 +118,102 @@
                         <input type="text" step="0.01" class="form-control" id="discount" name="discount" required>
 
                         <label for="paid" class="form-label"><i class="fas fa-money-bill-wave"></i> Paid</label>
-                        <input type="number" step="0.01" class="form-control" id="paid" name="paid" required>
+                        <input type="number" step="0.01" class="form-control" id="paid" name="paid" onChange="onPaid()" required>
+                        <span id="paidDemo" style="color:red;"></span>
 
                         <label for="balance" class="form-label"><i class="fas fa-calculator"></i> Balance</label>
                         <input type="number" step="0.01" class="form-control" id="balance" name="balance" readonly required>
 
                         <label for="installment" class="form-label"><i class="fas fa-calendar-alt"></i> Installment</label>
                         <input type="number" step="0.01" class="form-control" id="installment" name="installment" required>
+                        <span id="phoneDemo" style="color:red;"></span>
                     </div>
+
+                 <script>
+                     function onNameChange(){
+                        console.log('this is on place name');
+                        var name = document.getElementById('name');
+                        var nameValue = name.value;
+                        }
+                       const xhttp = new XMLHttpRequest();
+                       xhttp.open("GET","http://localhost:8080/Shanta_Gym/name/" + nameValue);
+                       xhttp.send();
+
+                       xhttp.onload = function(){
+                       document.getElementById("nameDemo").innerHTML = this.responseText;
+                         }
+                       }
+
+            function onEmailChange(){
+                        console.log('this is on place email');
+                        var email = document.getElementById('email');
+                        var emailValue = email.value;
+                        }
+                       const xhttp = new XMLHttpRequest();
+                       xhttp.open("GET","http://localhost:8080/Shanta_Gym/email/" + emailValue);
+                       xhttp.send();
+
+                       xhttp.onload = function(){
+                       document.getElementById("emailDemo").innerHTML = this.responseText;
+                         }
+                       }
+
+            function onTrainerChange(){
+                        console.log('this is on place trainer');
+                        var trainer = document.getElementById('trainer');
+                        var trainerValue = trainer.value;
+                        }
+
+                       const xhttp = new XMLHttpRequest();
+                       xhttp.open("GET","http://localhost:8080/Shanta_Gym/trainer/" + trainerValue);
+                       xhttp.send();
+
+                       xhttp.onload = function(){
+                       document.getElementById("trainerDemo").innerHTML = this.responseText;
+                         }
+                       }
+
+        function onPhoneChange(){
+          console.log('this is on place phone');
+          var phone = document.getElementById('trainer');
+          var phoneValue = phone.value;
+          }
+          const xhttp = new XMLHttpRequest();
+          xhttp.open("GET","http://localhost:8080/Shanta_Gym/phone/" + phoneValue);
+          xhttp.send();
+
+          xhttp.onload = function(){
+          document.getElementById("trainerDemo").innerHTML = this.responseText;
+          }
+        }
+
+        function onGymName(){
+            console.log('this is on place GymName');
+            var gymName = document.getElementById('gymName');
+            var gymNameValue = gymName.value;
+            }
+            const xhttp = new XMLHttpRequest();
+            xhttp.open("GET","http://localhost:8080/Shanta_Gym/gymName/" + gymNameValue);
+            xhttp.send();
+
+            xhttp.onload = function(){
+            document.getElementById("gymDemo").innerHTML = this.responseText;
+             }
+         }
+
+           function onPaid(){
+                     console.log('this is on place paid');
+                     var paid = document.getElementById('paid');
+                     var paidValue = paid.value;
+                     }
+                     const xhttp = new XMLHttpRequest();
+                     xhttp.open("GET","http://localhost:8080/Shanta_Gym/paid/" + paidValue);
+                     xhttp.send();
+
+                     xhttp.onload = function(){
+                     document.getElementById("paidDemo").innerHTML = this.responseText;
+                      }
+                  }
 
                     <button type="submit" class="btn btn-info w-100">Submit</button>
                     <a href="Update.jsp" class="btn btn-warning w-100 mt-2">Update</a>

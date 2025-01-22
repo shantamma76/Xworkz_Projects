@@ -9,9 +9,12 @@ import com.xworkz.gym.repository.GymRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.util.List;
-import java.util.Set;
+import java.util.Properties;
+
 
 @Service
 public class GymServiceImpl implements GymService {
@@ -45,6 +48,42 @@ public class GymServiceImpl implements GymService {
         System.out.println("Enquiry data is not saved");
         return false;
     }
+
+    @Override
+    public Long countName(String name) {
+        return repository.countName(name);
+    }
+
+//    @Override
+//    public Long countByEmail(String email) {
+//        return repository.countByEmail(email);
+//    }
+//
+//    @Override
+//    public Long countByPassword(String password) {
+//        return repository.countByPassword(password);
+//    }
+
+    @Override
+    public Long countArea(String area) {
+        return repository.countArea(area);
+    }
+
+    @Override
+    public Long countPhone(long phone) {
+        return repository.countPhone(phone);
+    }
+
+    @Override
+    public Long countDistance(int distance) {
+        return repository.countDistance(distance);
+    }
+
+    @Override
+    public Long countAge(int age) {
+        return repository.countAge(age);
+    }
+
 
     @Override
     public List<EnquiryEntity> getEnquiries() {
@@ -109,6 +148,46 @@ public class GymServiceImpl implements GymService {
         }
         return false;
     }
+
+    //sending email to customer for password
+    @Override
+    public boolean sendEmail(String email, String password) {
+        System.out.println("this email in serviceImpl ");
+        final String username = "siraganshantamma@gmail.com";
+        final String userPassword = "hhae fwza swyx wlyb";
+
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", "587");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(prop, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, userPassword);
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(
+                    Message.RecipientType.TO,
+                    InternetAddress.parse(email)
+            );
+            message.setSubject("Your password");
+            message.setText("your password: " + password);
+
+            Transport.send(message);
+
+            System.out.println("Email sending is Done");
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
 //    @Override
 //    public boolean updateDetails(String name, RegisterDto registerDto) {

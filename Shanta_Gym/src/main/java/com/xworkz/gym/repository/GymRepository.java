@@ -8,7 +8,15 @@ import java.util.List;
 public interface GymRepository {
 
     boolean getNameByEmail(String email, String password); //admin login
-    boolean saveEnquiry(EnquiryEntity enquiryEntity);     //for enquiry form
+    boolean saveEnquiry(EnquiryEntity enquiryEntity);//for enquiry form
+
+    Long countName(String name);   //for ajax validation
+    //Long countByEmail(String email);
+    //Long countByPassword(String password);
+    Long countArea(String area);
+    Long countPhone(long phone);
+    Long countDistance(int distance);
+    Long countAge(int age);
 
     List<EnquiryEntity> findAll();
     List<EnquiryEntity> findByStatus(String status);

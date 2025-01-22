@@ -2,6 +2,7 @@ package com.xworkz.gym.Controller;
 
 import com.xworkz.gym.DTO.RegisterDto;
 import com.xworkz.gym.service.GymService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 import java.util.Set;
 
+@Slf4j
 @Controller
 public class RegisterController {
 
@@ -20,7 +22,7 @@ public class RegisterController {
 
     @PostMapping("/register")
     public String onRegister(RegisterDto dto, Model model) {
-        System.out.println("onRegister in RegisterController");
+        log.debug("onRegister in RegisterController");
         boolean saveData = service.saveRegister(dto);
         if (saveData) {
             model.addAttribute("msg", "saved");

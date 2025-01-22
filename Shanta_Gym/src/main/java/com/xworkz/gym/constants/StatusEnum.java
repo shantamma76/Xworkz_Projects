@@ -1,7 +1,7 @@
 package com.xworkz.gym.constants;
 
 public enum StatusEnum {
-    Enquired, FollowedUp;
+    Enquired, Interested,NotInterested;
 
     @Override
     public String toString() {

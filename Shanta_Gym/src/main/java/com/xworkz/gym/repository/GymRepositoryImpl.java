@@ -68,6 +68,141 @@ public class GymRepositoryImpl implements GymRepository {
     }
 
     @Override
+    public Long countName(String name) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+
+        Long count = (Long) em.createNamedQuery("countByName").setParameter("setName",name).getSingleResult();
+        try {
+            et.begin();
+            et.commit();
+        } catch (Exception e){
+            if(et.isActive()){
+                et.rollback();
+            }
+        }finally {
+            em.close();
+        }
+        return count;
+    }
+
+//    @Override
+//    public Long countByEmail(String email) {
+//        EntityManager em = emf.createEntityManager();
+//        EntityTransaction et = em.getTransaction();
+//
+//        Long count = (Long) em.createNamedQuery("countByEmail").setParameter("setEmail",email).getSingleResult();
+//
+//        try {
+//            et.begin();
+//            et.commit();
+//        } catch (Exception e){
+//            if(et.isActive()){
+//                et.rollback();
+//            }
+//        }finally {
+//            em.close();
+//        }
+//        return count;
+//    }
+
+
+//    @Override
+//    public Long countByPassword(String password) {
+//        EntityManager em = emf.createEntityManager();
+//        EntityTransaction et = em.getTransaction();
+//
+//        Long count = (Long) em.createNamedQuery("countByPassword").setParameter("setPassword",password).getSingleResult();
+//        try {
+//            et.begin();
+//            et.commit();
+//        } catch (Exception e){
+//            if(et.isActive()){
+//                et.rollback();
+//            }
+//        } finally {
+//            em.close();
+//        }
+//        return count;
+//    }
+
+    @Override
+    public Long countArea(String area) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        Long count = (Long) em.createNamedQuery("countByArea").setParameter("setArea",area).getSingleResult();
+
+        try{
+            et.begin();
+            et.commit();
+        } catch (Exception e){
+            if (et.isActive()){
+                et.rollback();
+            }
+        } finally {
+            em.close();
+        }
+        return count;
+    }
+
+    @Override
+    public Long countPhone(long phone) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        Long count = (Long) em.createNamedQuery("countByPhone").setParameter("setPhone",phone).getSingleResult();
+
+        try{
+            et.begin();
+            et.commit();
+        } catch (Exception e){
+            if (et.isActive()){
+                et.rollback();
+            }
+        } finally {
+            em.close();
+        }
+        return count;
+    }
+
+    @Override
+    public Long countDistance(int distance) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        Long count = (Long) em.createNamedQuery("countByDistance").setParameter("setDistance",distance).getSingleResult();
+
+        try{
+            et.begin();
+            et.commit();
+        } catch (Exception e){
+            if (et.isActive()){
+                et.rollback();
+            }
+        } finally {
+            em.close();
+        }
+        return count;
+    }
+
+    @Override
+    public Long countAge(int age) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        Long count = (Long) em.createNamedQuery("countByAge").setParameter("setAge",age).getSingleResult();
+
+        try{
+            et.begin();
+            et.commit();
+        } catch (Exception e){
+            if (et.isActive()){
+                et.rollback();
+            }
+        } finally {
+            em.close();
+        }
+        return count;
+    }
+
+    @Override
     public List<EnquiryEntity> findAll() {
         System.out.println(" findAll in GymRepositoryImpl");
         EntityManager entityManager = emf.createEntityManager();
@@ -82,7 +217,6 @@ public class GymRepositoryImpl implements GymRepository {
         System.out.println("findByStatus in GymRepositoryImpl");
         EntityManager entityManager = emf.createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
-
         String query = "SELECT e FROM EnquiryEntity e WHERE e.status = :status";
         return entityManager.createQuery(query, EnquiryEntity.class).setParameter("status", status).getResultList();
     }
