@@ -10,13 +10,24 @@ public interface GymRepository {
     boolean getNameByEmail(String email, String password); //admin login
     boolean saveEnquiry(EnquiryEntity enquiryEntity);//for enquiry form
 
-    Long countName(String name);   //for ajax validation
-    //Long countByEmail(String email);
-    //Long countByPassword(String password);
+    Long countEmail(String email);
+    Long countPassword(String password);
+
+    Long countName(String name);   //for Enquiry ajax validation
     Long countArea(String area);
     Long countPhone(long phone);
     Long countDistance(int distance);
     Long countAge(int age);
+
+    Long countNameBy(String name); //for register ajax validation
+    Long countByEmail(String email);
+    Long countByTrainer(String trainer);
+    Long countByPhone(long phone);
+    Long countByGymName(String gymName);
+//    Long countByPaid(int paid);
+//    Long countInstallmentDemo(double installment);
+
+
 
     List<EnquiryEntity> findAll();
     List<EnquiryEntity> findByStatus(String status);

@@ -11,8 +11,8 @@ import javax.persistence.*;
 
 @NamedQuery(name="getNameByEmailAndPassword", query="select p.name from AdminEntity p where p.email = :byEmail AND p.password = :byPassword")
 //@NamedQuery(name="countByName", query = "select count(e) from AdminEntity e where e.name = :setName")
-//@NamedQuery(name="countByEmail", query = "select count(e) from AdminEntity e where e.email = :setEmail")
-//@NamedQuery(name="countByPassword",query = "select count(e) from AdminEntity e where e.password = :setPassword")
+@NamedQuery(name="findByEmail", query = "select count(e) from AdminEntity e where e.email = :emailBy")
+@NamedQuery(name="findByPassword",query = "select count(e) from AdminEntity e where e.password = :passwordBy")
 public class AdminEntity {
 
     @Id

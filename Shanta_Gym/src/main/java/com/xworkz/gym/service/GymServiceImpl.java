@@ -14,6 +14,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 
 @Service
@@ -50,19 +51,19 @@ public class GymServiceImpl implements GymService {
     }
 
     @Override
+    public Long countEmail(String email) {
+        return repository.countEmail(email);
+    }
+
+    @Override
+    public Long countPassword(String password) {
+        return repository.countPassword(password);
+    }
+
+    @Override
     public Long countName(String name) {
         return repository.countName(name);
     }
-
-//    @Override
-//    public Long countByEmail(String email) {
-//        return repository.countByEmail(email);
-//    }
-//
-//    @Override
-//    public Long countByPassword(String password) {
-//        return repository.countByPassword(password);
-//    }
 
     @Override
     public Long countArea(String area) {
@@ -84,6 +85,30 @@ public class GymServiceImpl implements GymService {
         return repository.countAge(age);
     }
 
+    @Override
+    public Long countNameBy(String name) {
+        return repository.countNameBy(name);
+    }
+
+    @Override
+    public Long countByEmail(String email) {
+        return repository.countByEmail(email);
+    }
+
+    @Override
+    public Long countByTrainer(String trainer) {
+        return repository.countByTrainer(trainer);
+    }
+
+    @Override
+    public Long countByPhone(long phone) {
+        return repository.countByPhone(phone);
+    }
+
+    @Override
+    public Long countByGymName(String gymName) {
+        return repository.countByGymName(gymName);
+    }
 
     @Override
     public List<EnquiryEntity> getEnquiries() {
@@ -112,7 +137,7 @@ public class GymServiceImpl implements GymService {
         RegisterEntity entity = new RegisterEntity();
         entity.setName(registerDto.getName());
         entity.setEmail(registerDto.getEmail());
-        entity.setPassword(registerDto.getPassword());
+        //entity.setPassword(registerDto.getPassword());
         entity.setPackages(registerDto.getPackages());
         entity.setTrainer(registerDto.getTrainer());
         entity.setPhone(registerDto.getPhone());
@@ -123,30 +148,34 @@ public class GymServiceImpl implements GymService {
         entity.setBalance(registerDto.getBalance());
         entity.setInstallment(registerDto.getInstallment());
 
-        boolean saves = repository.saveRegister(entity);
-        if(saves){
-            System.out.println("register data is saved");
-            return true;
+        String randamPassword = generateRandomPassword();
+        entity.setPassword(randamPassword);
+
+        boolean isResponse = repository.saveRegister(entity);
+        if (isResponse) {
+            sendEmail(registerDto.getEmail(), randamPassword);
         }
-        System.out.println("register data is not saved");
-        return false;
+        return isResponse;
+
+//        boolean saves = repository.saveRegister(entity);
+//        if(saves){
+//            System.out.println("register data is saved");
+//            return true;
+//        }
+//        System.out.println("register data is not saved");
+//        return false;
     }
 
-    @Override
-    public boolean updateRegister(RegisterDto registerDto, String name, long phone) {
-        System.out.println("updateRegister in serviceImpl");
+    private String generateRandomPassword() {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+        StringBuilder password = new StringBuilder();
 
-        RegisterEntity entity = repository.updateRegister(name,phone);
-        if(entity != null) {
-            entity.setPackages(registerDto.getPackages());
-            entity.setTrainer(registerDto.getTrainer());
-            entity.setAmount(registerDto.getAmount());
-            entity.setBalance(registerDto.getBalance());
-
-            repository.saveRegister(entity);
-            return true;
+        for (int i = 0; i < 8; i++) {
+            int randomIndex = random.nextInt(characters.length());
+            password.append(characters.charAt(randomIndex));
         }
-        return false;
+        return password.toString();
     }
 
     //sending email to customer for password
@@ -184,6 +213,23 @@ public class GymServiceImpl implements GymService {
 
         } catch (MessagingException e) {
             e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateRegister(RegisterDto registerDto, String name, long phone) {
+        System.out.println("updateRegister in serviceImpl");
+
+        RegisterEntity entity = repository.updateRegister(name, phone);
+        if (entity != null) {
+            entity.setPackages(registerDto.getPackages());
+            entity.setTrainer(registerDto.getTrainer());
+            entity.setAmount(registerDto.getAmount());
+            entity.setBalance(registerDto.getBalance());
+
+            repository.saveRegister(entity);
+            return true;
         }
         return false;
     }

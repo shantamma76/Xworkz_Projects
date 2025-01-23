@@ -22,7 +22,8 @@
 
         /* Navbar */
         .navbar {
-            background-color:gray; /* Semi-transparent background */
+            background-color: gray;
+            /* Semi-transparent background */
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
             z-index: 1;
         }
@@ -63,7 +64,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Dark overlay */
             z-index: -1;
         }
 
@@ -148,6 +150,8 @@
 
         </div>
     </section>
+
+    <a href="ViewPage.jsp">ViewPage</a>
 
     <!-- Footer -->
     <footer class="footer">

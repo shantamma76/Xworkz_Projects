@@ -67,6 +67,46 @@ public class GymRepositoryImpl implements GymRepository {
         }
     }
 
+    //Admin ajax validation
+    @Override
+    public Long countEmail(String email) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+
+        Long count = (Long) em.createNamedQuery("findByEmail").setParameter("emailBy",email).getSingleResult();
+        try {
+            et.begin();
+            et.commit();
+        } catch (Exception e){
+            if(et.isActive()){
+                et.rollback();
+            }
+        }finally {
+            em.close();
+        }
+        return count;
+    }
+
+    @Override
+    public Long countPassword(String password) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+
+        Long count = (Long) em.createNamedQuery("findByPassword").setParameter("passwordBy",password).getSingleResult();
+        try {
+            et.begin();
+            et.commit();
+        } catch (Exception e){
+            if(et.isActive()){
+                et.rollback();
+            }
+        }finally {
+            em.close();
+        }
+        return count;
+    }
+
+//Enquiry Ajax Validation
     @Override
     public Long countName(String name) {
         EntityManager em = emf.createEntityManager();
@@ -85,46 +125,6 @@ public class GymRepositoryImpl implements GymRepository {
         }
         return count;
     }
-
-//    @Override
-//    public Long countByEmail(String email) {
-//        EntityManager em = emf.createEntityManager();
-//        EntityTransaction et = em.getTransaction();
-//
-//        Long count = (Long) em.createNamedQuery("countByEmail").setParameter("setEmail",email).getSingleResult();
-//
-//        try {
-//            et.begin();
-//            et.commit();
-//        } catch (Exception e){
-//            if(et.isActive()){
-//                et.rollback();
-//            }
-//        }finally {
-//            em.close();
-//        }
-//        return count;
-//    }
-
-
-//    @Override
-//    public Long countByPassword(String password) {
-//        EntityManager em = emf.createEntityManager();
-//        EntityTransaction et = em.getTransaction();
-//
-//        Long count = (Long) em.createNamedQuery("countByPassword").setParameter("setPassword",password).getSingleResult();
-//        try {
-//            et.begin();
-//            et.commit();
-//        } catch (Exception e){
-//            if(et.isActive()){
-//                et.rollback();
-//            }
-//        } finally {
-//            em.close();
-//        }
-//        return count;
-//    }
 
     @Override
     public Long countArea(String area) {
@@ -149,7 +149,7 @@ public class GymRepositoryImpl implements GymRepository {
     public Long countPhone(long phone) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
-        Long count = (Long) em.createNamedQuery("countByPhone").setParameter("setPhone",phone).getSingleResult();
+        Long count = (Long) em.createNamedQuery("countPhoneBy").setParameter("setPhone",phone).getSingleResult();
 
         try{
             et.begin();
@@ -188,6 +188,103 @@ public class GymRepositoryImpl implements GymRepository {
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
         Long count = (Long) em.createNamedQuery("countByAge").setParameter("setAge",age).getSingleResult();
+
+        try{
+            et.begin();
+            et.commit();
+        } catch (Exception e){
+            if (et.isActive()){
+                et.rollback();
+            }
+        } finally {
+            em.close();
+        }
+        return count;
+    }
+
+    //Registration ajax validation
+    @Override
+    public Long countNameBy(String name) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        Long count = (Long) em.createNamedQuery("countNameBy").setParameter("setName",name).getSingleResult();
+
+        try{
+            et.begin();
+            et.commit();
+        } catch (Exception e){
+            if (et.isActive()){
+                et.rollback();
+            }
+        } finally {
+            em.close();
+        }
+        return count;
+    }
+
+
+    @Override
+    public Long countByEmail(String email) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        Long count = (Long) em.createNamedQuery("countByEmail").setParameter("setEmail",email).getSingleResult();
+
+        try{
+            et.begin();
+            et.commit();
+        } catch (Exception e){
+            if (et.isActive()){
+                et.rollback();
+            }
+        } finally {
+            em.close();
+        }
+        return count;
+    }
+
+    @Override
+    public Long countByTrainer(String trainer) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        Long count = (Long) em.createNamedQuery("countByTrainer").setParameter("setTrainer",trainer).getSingleResult();
+
+        try{
+            et.begin();
+            et.commit();
+        } catch (Exception e){
+            if (et.isActive()){
+                et.rollback();
+            }
+        } finally {
+            em.close();
+        }
+        return count;
+    }
+
+    @Override
+    public Long countByPhone(long phone) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        Long count = (Long) em.createNamedQuery("countByPhone").setParameter("phoneBy",phone).getSingleResult();
+
+        try{
+            et.begin();
+            et.commit();
+        } catch (Exception e){
+            if (et.isActive()){
+                et.rollback();
+            }
+        } finally {
+            em.close();
+        }
+        return count;
+    }
+
+    @Override
+    public Long countByGymName(String gymName) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        Long count = (Long) em.createNamedQuery("countByGymName").setParameter("setGymName",gymName).getSingleResult();
 
         try{
             et.begin();
