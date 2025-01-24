@@ -3,6 +3,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -18,6 +19,13 @@ import javax.persistence.*;
 @NamedQuery(name = "countByGymName", query = "select count(e) from RegisterEntity e where e.gymName = :setGymName")
 @NamedQuery(name = "countByPaid", query = "select count(e) from RegisterEntity e where e.paid = :setPaid")
 @NamedQuery(name="countByInstallment", query = "select count(e) from RegisterEntity e where e.installment = :setInstallment")
+
+@NamedQuery(name="getAll", query="select p from RegisterEntity p where p.email = :setEmail and p.password = :setPassword")
+
+@NamedQuery(name= "getAllByEmail", query = "SELECT p FROM RegisterEntity p WHERE p.email =:byEmail")
+@NamedQuery(name = "resetCount", query="UPDATE RegisterEntity p SET p.loginCount =: setLoginCount where p.email =: byEmail")
+@NamedQuery(name = "updateCount", query="update RegisterEntity p set p.loginCount =:setLoginCount where p.email =: byEmail")
+@NamedQuery(name="accountLockedTimeByEmail", query="update RegisterEntity p set p.accountLockedTime = :accountLockedTimeBy where p.email = :emailBy")
 
 public class RegisterEntity {
     @Id
@@ -37,6 +45,27 @@ public class RegisterEntity {
     private double balance;
     private double installment;
 
+    @Column(name="login_count")
+    private int loginCount;
+
+    @Column(name="account_locked_time")
+    private LocalDateTime accountLockedTime;
+
+    public Integer getLoginCount() {
+        return loginCount;
+    }
+
+    public void setLoginCount(Integer loginCount) {
+        this.loginCount = loginCount;
+    }
+
+    public LocalDateTime getAccountLockedTime() {
+        return accountLockedTime;
+    }
+
+    public void setAccountLockedTime(LocalDateTime accountLockedTime) {
+        this.accountLockedTime = accountLockedTime;
+    }
 }
 
 

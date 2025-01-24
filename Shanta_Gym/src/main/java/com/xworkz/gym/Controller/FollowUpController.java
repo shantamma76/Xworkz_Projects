@@ -40,7 +40,7 @@ public class FollowUpController {
         return "FollowUp";
     }
 
-    @GetMapping("search")
+    @PostMapping("search")
     public String onFollow(@RequestParam(value = "status", required = false) String status, Model model) {
         List<EnquiryEntity> enquiryList;
 

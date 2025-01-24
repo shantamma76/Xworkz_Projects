@@ -151,7 +151,7 @@
         </div>
     </section>
 
-    <a href="ViewPage.jsp">ViewPage</a>
+    <a href="UserLogin.jsp">UserLogin</a>
 
     <!-- Footer -->
     <footer class="footer">
