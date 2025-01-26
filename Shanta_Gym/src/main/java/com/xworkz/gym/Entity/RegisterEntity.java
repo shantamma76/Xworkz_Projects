@@ -51,21 +51,7 @@ public class RegisterEntity {
     @Column(name="account_locked_time")
     private LocalDateTime accountLockedTime;
 
-    public Integer getLoginCount() {
-        return loginCount;
-    }
 
-    public void setLoginCount(Integer loginCount) {
-        this.loginCount = loginCount;
-    }
-
-    public LocalDateTime getAccountLockedTime() {
-        return accountLockedTime;
-    }
-
-    public void setAccountLockedTime(LocalDateTime accountLockedTime) {
-        this.accountLockedTime = accountLockedTime;
-    }
 }
 
 

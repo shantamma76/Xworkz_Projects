@@ -1,9 +1,5 @@
 package com.xworkz.gym.repository;
-
-import com.xworkz.gym.DTO.RegisterDto;
 import com.xworkz.gym.Entity.EnquiryEntity;
-
-
 import com.xworkz.gym.Entity.RegisterEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

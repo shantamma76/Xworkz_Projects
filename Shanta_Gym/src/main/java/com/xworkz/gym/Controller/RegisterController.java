@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.ConstraintViolation;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,6 +34,7 @@ public class RegisterController {
             return "Registration";
         }
     }
+
 
 //    @PostMapping("/update")
 //    public String updateDetails(@RequestParam String name, RegisterDto dto, Model model) {

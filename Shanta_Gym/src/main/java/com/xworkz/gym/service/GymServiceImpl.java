@@ -149,15 +149,7 @@ public class GymServiceImpl implements GymService {
         entity.setBalance(registerDto.getBalance());
         entity.setInstallment(registerDto.getInstallment());
         entity.setLoginCount(-1);
-       // entity.setAccountLockedTime(now);
 
-//        String password = null;
-//        int count = -1;
-//        if (entity.getEmail() != null) {
-//            password = generateRandomPassword();
-//            entity.setPassword(password);
-//            entity.setLoginCount(count);
-//        }
 
         String randamPassword = generateRandomPassword();
         entity.setPassword(randamPassword);

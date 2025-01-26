@@ -3,7 +3,11 @@ package com.xworkz.gym.service;
 import com.xworkz.gym.DTO.EnquiryDto;
 import com.xworkz.gym.DTO.RegisterDto;
 import com.xworkz.gym.Entity.EnquiryEntity;
+import com.xworkz.gym.Entity.RegisterEntity;
+
+import javax.validation.ConstraintViolation;
 import java.util.List;
+import java.util.Set;
 
 
 public interface GymService {
