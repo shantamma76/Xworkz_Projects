@@ -2,8 +2,10 @@ package com.xworkz.gym.service;
 
 import com.xworkz.gym.DTO.EnquiryDto;
 import com.xworkz.gym.DTO.RegisterDto;
+import com.xworkz.gym.DTO.ViewDto;
 import com.xworkz.gym.Entity.EnquiryEntity;
 import com.xworkz.gym.Entity.RegisterEntity;
+import com.xworkz.gym.Entity.ViewEntity;
 
 import javax.validation.ConstraintViolation;
 import java.util.List;
@@ -33,13 +35,20 @@ public interface GymService {
 
     List<EnquiryEntity> getEnquiries();
     List<EnquiryEntity> getEnquiriesByStatus(String status);
-    boolean updateStatusAndReason(String name,String status, String reason);
+
+    boolean updateStatusAndReason(String name,String status, String reasons);
+    //view page
+    boolean saveView(ViewEntity viewDto);
+    List<ViewEntity> getAllFollowup(int id);
 
     boolean saveRegister(RegisterDto registerDto);
-
     boolean updateRegister(RegisterDto registerDto,String name,long phone);
 
     boolean sendEmail(String email, String password);
+
+   // public List<ViewEntity> getAllData(int id);
+
+
 
 
 

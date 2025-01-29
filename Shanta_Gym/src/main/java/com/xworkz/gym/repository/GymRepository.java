@@ -1,7 +1,8 @@
 package com.xworkz.gym.repository;
-import com.xworkz.gym.DTO.RegisterDto;
+
 import com.xworkz.gym.Entity.EnquiryEntity;
 import com.xworkz.gym.Entity.RegisterEntity;
+import com.xworkz.gym.Entity.ViewEntity;
 
 import java.util.List;
 
@@ -24,20 +25,18 @@ public interface GymRepository {
     Long countByTrainer(String trainer);
     Long countByPhone(long phone);
     Long countByGymName(String gymName);
-//    Long countByPaid(int paid);
-//    Long countInstallmentDemo(double installment);
-
-
 
     List<EnquiryEntity> findAll();
     List<EnquiryEntity> findByStatus(String status);
-    boolean updateStatusAndReason(String name, String status, String reason);
+    boolean updateStatusAndReason(String name, String status, String reasons);
 
     boolean saveRegister(RegisterEntity registerEntity);
+    public RegisterEntity updateRegister(String name, long phone);
 
 //    boolean updateDetails(String name,RegisterDto registerDto);
 
-    public RegisterEntity updateRegister(String name, long phone);
-
+    EnquiryEntity getEnquiryEntityByName(String name);
+    boolean saveView(ViewEntity viewEntity);
+    List<ViewEntity> getAllData(int id); //viewDetails
 
 }

@@ -2,26 +2,32 @@ package com.xworkz.gym.service;
 
 import com.xworkz.gym.DTO.EnquiryDto;
 import com.xworkz.gym.DTO.RegisterDto;
+import com.xworkz.gym.DTO.ViewDto;
 import com.xworkz.gym.Entity.EnquiryEntity;
 import com.xworkz.gym.Entity.RegisterEntity;
+import com.xworkz.gym.Entity.ViewEntity;
 import com.xworkz.gym.constants.StatusEnum;
 import com.xworkz.gym.repository.GymRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
-
+@Slf4j
 @Service
 public class GymServiceImpl implements GymService {
 
     @Autowired
     GymRepository repository;
+
 
     @Override
     public boolean getNameByEmail(String email, String password) {
@@ -121,13 +127,44 @@ public class GymServiceImpl implements GymService {
     }
 
     @Override
-    public boolean updateStatusAndReason(String name, String status, String reason) {
+    public boolean updateStatusAndReason(String name, String status, String reasons) {
         System.out.println("updateStatusAndReason in GymServiceImpl");
-        boolean saved = repository.updateStatusAndReason(name, status, reason);
+        boolean saved = repository.updateStatusAndReason(name, status, reasons);
+        EnquiryEntity enquiryEntity =repository.getEnquiryEntityByName(name);
+        EnquiryEntity enquiry=new EnquiryEntity();
+        System.out.println("aaaaaaaaaaaaaa"+enquiryEntity);
+        ViewEntity viewEntity = new ViewEntity();
+        viewEntity.setName(enquiryEntity.getName());
+        viewEntity.setArea(enquiryEntity.getArea());
+        viewEntity.setPhone(enquiryEntity.getPhone());
+        viewEntity.setReasons(reasons);
+        enquiry.setId(enquiryEntity.getId());
+        viewEntity.setEnquiryEntity(enquiry);
+        viewEntity.setUpdatedOn(LocalDateTime.now());
+        saveView(viewEntity);
         if (saved)
             return true;
 
         return false;
+    }
+
+
+    @Override
+    public boolean saveView(ViewEntity viewEntity) {
+        log.info("saveView in ServiceImpl");
+
+        boolean saved = repository.saveView(viewEntity);
+        if(saved){
+            System.out.println("savedView is saved");
+            return true;
+        }
+        System.out.println("this is not saved");
+        return false;
+    }
+    @Override
+    public List<ViewEntity> getAllFollowup(int id) {
+        System.out.println("getAllFollowup in serviceImpl:"+repository.getAllData(id));
+        return repository.getAllData(id);
     }
 
     @Override
@@ -148,8 +185,6 @@ public class GymServiceImpl implements GymService {
         entity.setPaid(registerDto.getPaid());
         entity.setBalance(registerDto.getBalance());
         entity.setInstallment(registerDto.getInstallment());
-        entity.setLoginCount(-1);
-
 
         String randamPassword = generateRandomPassword();
         entity.setPassword(randamPassword);
@@ -159,14 +194,6 @@ public class GymServiceImpl implements GymService {
             sendEmail(registerDto.getEmail(), randamPassword);
         }
         return isResponse;
-
-//        boolean saves = repository.saveRegister(entity);
-//        if(saves){
-//            System.out.println("register data is saved");
-//            return true;
-//        }
-//        System.out.println("register data is not saved");
-//        return false;
     }
 
     private String generateRandomPassword() {
@@ -237,12 +264,5 @@ public class GymServiceImpl implements GymService {
         return false;
     }
 
-
-//    @Override
-//    public boolean updateDetails(String name, RegisterDto registerDto) {
-//        System.out.println("In Service layer - UpdateDetails: " + registerDto);
-////        registerDto.setName(name);
-//        return repository.updateDetails(name,registerDto);
-//    }
 
 }

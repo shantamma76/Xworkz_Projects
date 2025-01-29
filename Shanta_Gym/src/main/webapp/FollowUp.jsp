@@ -233,6 +233,7 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         <c:forEach var="enquiry" items="${enquiryList}">
                             <tr>
@@ -254,12 +255,13 @@
                                     </td>
 
                                     <td>
-                                        <input type="text" name="reason" value="${enquiry.reason}" />
+                                        <input type="text" name="reasons" value="${enquiry.reasons}" />
                                     </td>
 
                                     <td>
                                         <input type="hidden" name="name" value="${enquiry.name}" />
-                                        <button type="submit" class="btn"><i class="fas fa-edit"></i> Update</button>
+                                        <button type="submit" class="btn"><i class="fas fa-edit"></i>Update</button>
+                                       <a href="view?id=${enquiry.id}" class="btn"><i class="fas fa-eye"></i> View </a>
                                     </td>
 
                                 </form>
@@ -271,4 +273,3 @@
         </body>
 
         </html>
-

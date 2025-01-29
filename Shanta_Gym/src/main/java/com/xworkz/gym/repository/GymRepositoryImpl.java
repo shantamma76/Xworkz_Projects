@@ -1,10 +1,12 @@
 package com.xworkz.gym.repository;
 import com.xworkz.gym.Entity.EnquiryEntity;
 import com.xworkz.gym.Entity.RegisterEntity;
+import com.xworkz.gym.Entity.ViewEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -302,7 +304,6 @@ public class GymRepositoryImpl implements GymRepository {
         EntityTransaction entityTransaction = entityManager.getTransaction();
         String query = "SELECT e FROM EnquiryEntity e ";
         return entityManager.createQuery(query, EnquiryEntity.class).getResultList();
-
     }
 
     @Override
@@ -314,18 +315,17 @@ public class GymRepositoryImpl implements GymRepository {
         return entityManager.createQuery(query, EnquiryEntity.class).setParameter("status", status).getResultList();
     }
 
-
     @Override
-    public boolean updateStatusAndReason(String name, String status, String reason) {
+    public boolean updateStatusAndReason(String name, String status, String reasons) {
         System.out.println("updateStatusAndReason in GymRepositoryImpl");
         EntityManager entityManager = emf.createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         boolean isUpdated = false;
         try {
             entityTransaction.begin();
-            String query = "UPDATE EnquiryEntity e SET e.status = :status, e.reason = :reason WHERE e.name = :name";
+            String query = "UPDATE EnquiryEntity e SET e.status = :status, e.reasons = :reasons WHERE e.name = :name";
             int rowsAffected = entityManager.createQuery(query).setParameter("status", status)
-                    .setParameter("reason", reason)
+                    .setParameter("reasons", reasons)
                     .setParameter("name", name)
                     .executeUpdate();
 
@@ -391,6 +391,70 @@ public class GymRepositoryImpl implements GymRepository {
             entityManager.close();
         }
         return result;
+    }
+
+    @Override
+    public EnquiryEntity getEnquiryEntityByName(String name) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        String queryStr = "SELECT e FROM EnquiryEntity e WHERE e.name = :setName";
+        EnquiryEntity result = null;
+
+        try {
+            et.begin();
+            Query query = em.createQuery(queryStr);
+            query.setParameter("setName", name);
+            result = (EnquiryEntity) query.getSingleResult();
+            System.out.println(result);
+            et.commit();
+        } catch (Exception e) {
+            if (et.isActive()) {
+                et.rollback();
+            }
+            e.printStackTrace(); // Log the exception
+        } finally {
+            em.close();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean saveView(ViewEntity viewEntity) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        try{
+            et.begin();
+            em.persist(viewEntity);
+            et.commit();
+        }catch (Exception e){
+            if(et.isActive()){
+                et.rollback();
+            }
+        }finally {
+            em.close();
+        }
+        return true;
+
+    }
+
+
+    @Override
+    public List<ViewEntity> getAllData(int id) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        List<ViewEntity> list = null;
+
+        try {
+
+            List<ViewEntity> result = em.createNamedQuery("getAllData").setParameter("setEnquiryId",id).getResultList();
+            System.out.println("viewDetails in repo======"+result.toString());
+            return result;
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            em.close();
+        }
+        return Collections.emptyList();
     }
 
 
