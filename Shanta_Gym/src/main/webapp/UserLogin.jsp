@@ -15,7 +15,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header text-center">
-                    <h2>Sign In</h2>
+                    <h2>User Login</h2>
                 </div>
                 <div class="card-body">
                     <form action="signIn" method="post">
@@ -30,7 +30,7 @@
                         <button type="submit" class="btn btn-warning btn-block">Login</button>
                     </form>
                     <div class="reset-link">
-                    <a href="resetPassword.jsp" class="btn btn-link">Update your Password</a>
+                    <a href="resetPassword.jsp" class="btn btn-link">reset your Password</a>
                     <a href="forgetPassword.jsp" class="btn btn-link">Forget Password</a>
                 </div>
                 <div class="card-footer text-center">
@@ -47,3 +47,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
+
+
+

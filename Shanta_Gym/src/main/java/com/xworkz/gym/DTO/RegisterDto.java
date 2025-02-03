@@ -19,6 +19,7 @@ public class RegisterDto {
     private int paid;
     private double balance;
     private double installment;
+    private int loginCount;
 
 }
 

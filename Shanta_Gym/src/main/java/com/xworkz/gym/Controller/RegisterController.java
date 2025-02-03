@@ -33,6 +33,7 @@ public class RegisterController {
             model.addAttribute("error", "Not Saved");
             return "Registration";
         }
+
     }
 
 

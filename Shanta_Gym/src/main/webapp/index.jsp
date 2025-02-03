@@ -10,7 +10,7 @@
     <style>
         /* Custom styles */
         body {
-            background-image: url('https://img.freepik.com/premium-photo/contemporary-spotless-fitness-gym-center-interiorgenerative-ai_391052-10889.jpg?w=2000');
+            background-image: url('https://wallpaperaccess.com/full/2465431.jpg');
             background-size: cover;
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -22,7 +22,7 @@
 
         /* Navbar */
         .navbar {
-            background-color: gray;
+            background-color: black;
             /* Semi-transparent background */
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
             z-index: 1;
@@ -36,7 +36,7 @@
         .nav-link {
             color: white !important;
             font-size: 1.1rem;
-            text-transform: uppercase;
+
         }
 
         .nav-link:hover {
@@ -100,7 +100,7 @@
 
         /* Footer */
         .footer {
-            background-color: gray;
+            background-color: black;
             color: white;
             padding: 20px 0;
             text-align: center;
@@ -123,24 +123,35 @@
 
 <body>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <div class="container">
-            <!-- Logo -->
-            <a class="navbar-brand" href="#">
-                <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="Xworkz Logo">
-            </a>
+   <!-- Navbar -->
+   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+       <div class="container">
+           <!-- Logo -->
+           <a class="navbar-brand" href="#">
+               <img src="https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" alt="Xworkz Logo">
+           </a>
 
-            <!-- Navbar Links -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="Admin.jsp">Login</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+           <!-- Navbar Toggle Button -->
+           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+           </button>
+
+           <!-- Navbar Links -->
+           <div class="collapse navbar-collapse" id="navbarNav">
+               <ul class="navbar-nav ms-auto">
+                   <li class="nav-item">
+                       <a class="nav-link" href="Admin.jsp">Admin</a>
+                   </li>
+                   <li class="nav-item">
+                       <a class="nav-link" href="UserLogin.jsp">User</a>
+                   </li>
+               </ul>
+           </div>
+       </div>
+   </nav>
+
+
 
     <!-- Hero Section -->
     <section class="hero-section">
@@ -151,7 +162,7 @@
         </div>
     </section>
 
-    <a href="UserLogin.jsp">UserLogin</a>
+
 
     <!-- Footer -->
     <footer class="footer">

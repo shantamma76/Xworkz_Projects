@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class GymRepositoryImpl implements GymRepository {
 
     @Autowired
     EntityManagerFactory emf;
+    private EntityTransaction et;
 
     @Override
     public boolean getNameByEmail(String email, String password) {
@@ -44,7 +46,7 @@ public class GymRepositoryImpl implements GymRepository {
             entityManager.close();
         }
     }
-
+//---------------------------------------------------------------------------------------
     @Override
     public boolean saveEnquiry(EnquiryEntity enquiryEntity) {
         System.out.println("Running saveEnquiry in GymRepositoryImpl");
@@ -71,15 +73,15 @@ public class GymRepositoryImpl implements GymRepository {
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
 
-        Long count = (Long) em.createNamedQuery("findByEmail").setParameter("emailBy",email).getSingleResult();
+        Long count = (Long) em.createNamedQuery("findByEmail").setParameter("emailBy", email).getSingleResult();
         try {
             et.begin();
             et.commit();
-        } catch (Exception e){
-            if(et.isActive()){
+        } catch (Exception e) {
+            if (et.isActive()) {
                 et.rollback();
             }
-        }finally {
+        } finally {
             em.close();
         }
         return count;
@@ -90,35 +92,35 @@ public class GymRepositoryImpl implements GymRepository {
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
 
-        Long count = (Long) em.createNamedQuery("findByPassword").setParameter("passwordBy",password).getSingleResult();
+        Long count = (Long) em.createNamedQuery("findByPassword").setParameter("passwordBy", password).getSingleResult();
         try {
             et.begin();
             et.commit();
-        } catch (Exception e){
-            if(et.isActive()){
+        } catch (Exception e) {
+            if (et.isActive()) {
                 et.rollback();
             }
-        }finally {
+        } finally {
             em.close();
         }
         return count;
     }
 
-//Enquiry Ajax Validation
+    //Enquiry Ajax Validation
     @Override
     public Long countName(String name) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
 
-        Long count = (Long) em.createNamedQuery("countByName").setParameter("setName",name).getSingleResult();
+        Long count = (Long) em.createNamedQuery("countByName").setParameter("setName", name).getSingleResult();
         try {
             et.begin();
             et.commit();
-        } catch (Exception e){
-            if(et.isActive()){
+        } catch (Exception e) {
+            if (et.isActive()) {
                 et.rollback();
             }
-        }finally {
+        } finally {
             em.close();
         }
         return count;
@@ -128,13 +130,13 @@ public class GymRepositoryImpl implements GymRepository {
     public Long countArea(String area) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
-        Long count = (Long) em.createNamedQuery("countByArea").setParameter("setArea",area).getSingleResult();
+        Long count = (Long) em.createNamedQuery("countByArea").setParameter("setArea", area).getSingleResult();
 
-        try{
+        try {
             et.begin();
             et.commit();
-        } catch (Exception e){
-            if (et.isActive()){
+        } catch (Exception e) {
+            if (et.isActive()) {
                 et.rollback();
             }
         } finally {
@@ -147,13 +149,13 @@ public class GymRepositoryImpl implements GymRepository {
     public Long countPhone(long phone) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
-        Long count = (Long) em.createNamedQuery("countPhoneBy").setParameter("setPhone",phone).getSingleResult();
+        Long count = (Long) em.createNamedQuery("countPhoneBy").setParameter("setPhone", phone).getSingleResult();
 
-        try{
+        try {
             et.begin();
             et.commit();
-        } catch (Exception e){
-            if (et.isActive()){
+        } catch (Exception e) {
+            if (et.isActive()) {
                 et.rollback();
             }
         } finally {
@@ -166,13 +168,13 @@ public class GymRepositoryImpl implements GymRepository {
     public Long countDistance(int distance) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
-        Long count = (Long) em.createNamedQuery("countByDistance").setParameter("setDistance",distance).getSingleResult();
+        Long count = (Long) em.createNamedQuery("countByDistance").setParameter("setDistance", distance).getSingleResult();
 
-        try{
+        try {
             et.begin();
             et.commit();
-        } catch (Exception e){
-            if (et.isActive()){
+        } catch (Exception e) {
+            if (et.isActive()) {
                 et.rollback();
             }
         } finally {
@@ -185,13 +187,13 @@ public class GymRepositoryImpl implements GymRepository {
     public Long countAge(int age) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
-        Long count = (Long) em.createNamedQuery("countByAge").setParameter("setAge",age).getSingleResult();
+        Long count = (Long) em.createNamedQuery("countByAge").setParameter("setAge", age).getSingleResult();
 
-        try{
+        try {
             et.begin();
             et.commit();
-        } catch (Exception e){
-            if (et.isActive()){
+        } catch (Exception e) {
+            if (et.isActive()) {
                 et.rollback();
             }
         } finally {
@@ -205,13 +207,13 @@ public class GymRepositoryImpl implements GymRepository {
     public Long countNameBy(String name) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
-        Long count = (Long) em.createNamedQuery("countNameBy").setParameter("setName",name).getSingleResult();
+        Long count = (Long) em.createNamedQuery("countNameBy").setParameter("setName", name).getSingleResult();
 
-        try{
+        try {
             et.begin();
             et.commit();
-        } catch (Exception e){
-            if (et.isActive()){
+        } catch (Exception e) {
+            if (et.isActive()) {
                 et.rollback();
             }
         } finally {
@@ -225,13 +227,13 @@ public class GymRepositoryImpl implements GymRepository {
     public Long countByEmail(String email) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
-        Long count = (Long) em.createNamedQuery("countByEmail").setParameter("setEmail",email).getSingleResult();
+        Long count = (Long) em.createNamedQuery("countByEmail").setParameter("setEmail", email).getSingleResult();
 
-        try{
+        try {
             et.begin();
             et.commit();
-        } catch (Exception e){
-            if (et.isActive()){
+        } catch (Exception e) {
+            if (et.isActive()) {
                 et.rollback();
             }
         } finally {
@@ -244,13 +246,13 @@ public class GymRepositoryImpl implements GymRepository {
     public Long countByTrainer(String trainer) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
-        Long count = (Long) em.createNamedQuery("countByTrainer").setParameter("setTrainer",trainer).getSingleResult();
+        Long count = (Long) em.createNamedQuery("countByTrainer").setParameter("setTrainer", trainer).getSingleResult();
 
-        try{
+        try {
             et.begin();
             et.commit();
-        } catch (Exception e){
-            if (et.isActive()){
+        } catch (Exception e) {
+            if (et.isActive()) {
                 et.rollback();
             }
         } finally {
@@ -263,13 +265,13 @@ public class GymRepositoryImpl implements GymRepository {
     public Long countByPhone(long phone) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
-        Long count = (Long) em.createNamedQuery("countByPhone").setParameter("phoneBy",phone).getSingleResult();
+        Long count = (Long) em.createNamedQuery("countByPhone").setParameter("phoneBy", phone).getSingleResult();
 
-        try{
+        try {
             et.begin();
             et.commit();
-        } catch (Exception e){
-            if (et.isActive()){
+        } catch (Exception e) {
+            if (et.isActive()) {
                 et.rollback();
             }
         } finally {
@@ -282,13 +284,13 @@ public class GymRepositoryImpl implements GymRepository {
     public Long countByGymName(String gymName) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
-        Long count = (Long) em.createNamedQuery("countByGymName").setParameter("setGymName",gymName).getSingleResult();
+        Long count = (Long) em.createNamedQuery("countByGymName").setParameter("setGymName", gymName).getSingleResult();
 
-        try{
+        try {
             et.begin();
             et.commit();
-        } catch (Exception e){
-            if (et.isActive()){
+        } catch (Exception e) {
+            if (et.isActive()) {
                 et.rollback();
             }
         } finally {
@@ -344,6 +346,8 @@ public class GymRepositoryImpl implements GymRepository {
         return isUpdated;
     }
 
+    //---------------------------------------------for registration------------------------------------
+
     @Override
     public boolean saveRegister(RegisterEntity registerEntity) {
         EntityManager entityManager = emf.createEntityManager();
@@ -354,13 +358,12 @@ public class GymRepositoryImpl implements GymRepository {
             entityManager.merge(registerEntity);
             entityTransaction.commit();
             return true;
-        } catch (Exception e){
-            if(entityTransaction.isActive()){
+        } catch (Exception e) {
+            if (entityTransaction.isActive()) {
                 entityTransaction.rollback();
             }
             return false;
-        }
-        finally {
+        } finally {
             entityManager.close();
         }
     }
@@ -377,14 +380,14 @@ public class GymRepositoryImpl implements GymRepository {
         try {
             entityTransaction.begin();
             Query query = entityManager.createQuery(queryStr);
-            query.setParameter("nameBy",name);
-            query.setParameter("phoneBy",phone);
+            query.setParameter("nameBy", name);
+            query.setParameter("phoneBy", phone);
             result = (RegisterEntity) query.getSingleResult();
             entityTransaction.commit();
 
-        } catch (Exception e){
-            System.out.println("error in update:" +e.getMessage());
-            if(entityTransaction.isActive()) {
+        } catch (Exception e) {
+            System.out.println("error in update:" + e.getMessage());
+            if (entityTransaction.isActive()) {
                 entityTransaction.isActive();
             }
         } finally {
@@ -392,7 +395,7 @@ public class GymRepositoryImpl implements GymRepository {
         }
         return result;
     }
-
+//-------------------------------------------------for view page------------------------------------------------------
     @Override
     public EnquiryEntity getEnquiryEntityByName(String name) {
         EntityManager em = emf.createEntityManager();
@@ -422,21 +425,20 @@ public class GymRepositoryImpl implements GymRepository {
     public boolean saveView(ViewEntity viewEntity) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction et = em.getTransaction();
-        try{
+        try {
             et.begin();
             em.persist(viewEntity);
             et.commit();
-        }catch (Exception e){
-            if(et.isActive()){
+        } catch (Exception e) {
+            if (et.isActive()) {
                 et.rollback();
             }
-        }finally {
+        } finally {
             em.close();
         }
         return true;
 
     }
-
 
     @Override
     public List<ViewEntity> getAllData(int id) {
@@ -445,9 +447,8 @@ public class GymRepositoryImpl implements GymRepository {
         List<ViewEntity> list = null;
 
         try {
-
-            List<ViewEntity> result = em.createNamedQuery("getAllData").setParameter("setEnquiryId",id).getResultList();
-            System.out.println("viewDetails in repo======"+result.toString());
+            List<ViewEntity> result = em.createNamedQuery("getAllData").setParameter("setEnquiryId", id).getResultList();
+            System.out.println("viewDetails in repo======" + result.toString());
             return result;
         } catch (Exception e) {
             e.getMessage();
@@ -457,42 +458,183 @@ public class GymRepositoryImpl implements GymRepository {
         return Collections.emptyList();
     }
 
+    //---------------------user login ------------------------
 
 //    @Override
-//    public boolean updateDetails(String name, RegisterDto registerDto) {
-//        System.out.println("updateDetails in GymRepositoryImpl:" + registerDto.toString());
-//        EntityManager entityManager = emf.createEntityManager();
-//        EntityTransaction entityTransaction = entityManager.getTransaction();
-//        boolean isUpdated = false;
-//        System.out.println("to know thje vslue of pscksge.."+registerDto.getPackages());
+//    public RegisterEntity  getEmail(String email, String password) {
+//        System.out.println("========getEmail in repository===");
+//        EntityManager em = emf.createEntityManager();
+//        EntityTransaction et = em.getTransaction();
 //
-//        try {
-//            entityTransaction.begin();
+//        try{
+//            et.begin();
+//            Object singleResult = em.createNamedQuery("getEmailPassword").setParameter("emailBy", email).setParameter("passwordBy", password).getSingleResult();
+//            System.out.println("---Single result in repo.."+singleResult);
+//            et.commit();
+//            return (RegisterEntity) singleResult;
 //
-//            int value = entityManager.createNamedQuery("updatedDetailsByName")
-//                    .setParameter("packagesBy", registerDto.getPackages())
-//                    .setParameter("trainerBy", registerDto.getTrainer())
-//                    .setParameter("amountBy", registerDto.getAmount())
-//                    .setParameter("balanceBy", registerDto.getBalance())
-//                    .setParameter("nameBy", name)
-//                    .executeUpdate();
-//            System.out.println("==================RepoImpl============");
-//            isUpdated = value > 0;
-//            entityTransaction.commit();
-//
-//
-//        } catch (Exception e) {
-//            if (entityTransaction.isActive()) {
-//                entityTransaction.rollback();
+//        } catch (Exception e){
+//            if(et.isActive()){
+//                et.rollback();
 //            }
+//            return null;
 //        } finally {
-//            entityManager.close();
+//            em.close();
 //        }
-//
-//        return isUpdated;
 //    }
 
-}
+    @Override
+    public RegisterEntity userSave(String email) {
+            EntityManager em = emf.createEntityManager();
+            EntityTransaction et = em.getTransaction();
+            RegisterEntity entity = null;
+            try {
+                Query query = em.createNamedQuery("getAllByEmail");
+                query.setParameter("byEmail", email);
+
+                entity = (RegisterEntity) query.getSingleResult();
+                System.out.println("Entity from repository " + entity.toString());
+
+//                List<RegisterEntity> result = query.getResultList();
+//
+//                if (!result.isEmpty()) {
+//                    entity = result.get(0);  // You can select the first or handle according to your logic
+//                    System.out.println("Entity from repository: " + entity);
+
+
+            }catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            } finally {
+                em.close();
+            }
+            return entity;
+    }
+
+
+    @Override
+    public void updateCount(String email, int count) {
+        int result = count + 1;
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+
+        int value;
+        try {
+            et.begin();
+            value = em.createNamedQuery("updateCount")
+                    .setParameter("setResetStatus", result).setParameter("byEmail", email).executeUpdate();
+            et.commit();
+        } catch (Exception e) {
+            if (et.isActive()) {
+                et.rollback();
+            }
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public boolean resetCount(String email, int count) {
+        System.out.println("=========resetCount in repoImpl============");
+        int result = 0;
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        int value = 0;
+        try {
+            et.begin();
+            value = em.createNamedQuery("resetCount").setParameter("setResetStatus", 0).setParameter("byEmail", email).executeUpdate();
+            et.commit();
+        } catch (Exception e) {
+            if (et.isActive()) {
+                et.rollback();
+            }
+        } finally {
+            em.close();
+        }
+        if (value > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    @Override
+    public String updatePasswordByEmail(String email, String newPassword) {
+        System.out.println("=====updatePasswordByEmail========");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+
+        try {
+            et.begin();
+            System.out.println("Email:" + email);
+            System.out.println("newPassword:" + newPassword);
+
+            Query query = em.createNamedQuery("updatePasswordByEmail");
+            query.setParameter("setNewPassword", newPassword);
+            query.setParameter("setResetStatus", 0);
+            query.setParameter("emailBy", email);
+
+            int value = query.executeUpdate();
+            et.commit();
+
+            if (value > 0) {
+                return "Password updated successfully";
+            } else {
+                return "Password is not updated";
+            }
+        } catch (Exception e) {
+            if (et.isActive()) {
+                et.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return "password updated successfully";
+        }
+
+
+//Account Locked
+    @Override
+    public String updateLockedAccountTimeByEmail(String email) {
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+
+        try{
+            et.begin();
+            Query query = em.createNamedQuery("accountLockedTimeByEmail");
+            query.setParameter("accountLockedTimeBy",LocalDateTime.now());
+            query.setParameter("emailBy", email);
+
+            int value = query.executeUpdate();
+            et.commit();
+
+            if(value > 0){
+                System.out.println("Account lock time is set to current time");
+            } else{
+                System.out.println("Failed to set account lock time");
+            }
+        } catch(Exception e){
+            if(et.isActive()){
+                et.rollback();
+            }
+        } finally {
+            {
+                em.close();
+            }
+        }
+        return "Account lock time is set";
+    }
+    }
+
+
+
+
+
+
+
+
 
 
 

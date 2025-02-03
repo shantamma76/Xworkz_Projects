@@ -2,7 +2,6 @@ package com.xworkz.gym.service;
 
 import com.xworkz.gym.DTO.EnquiryDto;
 import com.xworkz.gym.DTO.RegisterDto;
-import com.xworkz.gym.DTO.ViewDto;
 import com.xworkz.gym.Entity.EnquiryEntity;
 import com.xworkz.gym.Entity.RegisterEntity;
 import com.xworkz.gym.Entity.ViewEntity;
@@ -16,7 +15,6 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
@@ -26,35 +24,7 @@ import java.util.Random;
 public class GymServiceImpl implements GymService {
 
     @Autowired
-    GymRepository repository;
-
-
-    @Override
-    public boolean getNameByEmail(String email, String password) {
-        System.out.println("getNameByEmailAndPassword in GymServiceImpl");
-        boolean getName = repository.getNameByEmail(email, password);
-        return getName;
-    }
-
-    @Override
-    public boolean saveEnquiry(EnquiryDto enquiryDto) {
-        System.out.println("saveEnquiry in GymServiceImpl");
-        EnquiryEntity entity = new EnquiryEntity();
-        entity.setName(enquiryDto.getName());
-        entity.setArea(enquiryDto.getArea());
-        entity.setPhone(enquiryDto.getPhone());
-        entity.setDistance(enquiryDto.getDistance());
-        entity.setAge(enquiryDto.getAge());
-        entity.setStatus(String.valueOf(StatusEnum.Enquired));
-
-        boolean enquiry = repository.saveEnquiry(entity);
-        if (enquiry) {
-            System.out.println("Enquiry Data is saved");
-            return true;
-        }
-        System.out.println("Enquiry data is not saved");
-        return false;
-    }
+    private GymRepository repository;
 
     @Override
     public Long countEmail(String email) {
@@ -130,9 +100,9 @@ public class GymServiceImpl implements GymService {
     public boolean updateStatusAndReason(String name, String status, String reasons) {
         System.out.println("updateStatusAndReason in GymServiceImpl");
         boolean saved = repository.updateStatusAndReason(name, status, reasons);
-        EnquiryEntity enquiryEntity =repository.getEnquiryEntityByName(name);
-        EnquiryEntity enquiry=new EnquiryEntity();
-        System.out.println("aaaaaaaaaaaaaa"+enquiryEntity);
+        EnquiryEntity enquiryEntity = repository.getEnquiryEntityByName(name);
+        EnquiryEntity enquiry = new EnquiryEntity();
+        System.out.println("EnquiryEntity in updateStatusAndReason:" + enquiryEntity);
         ViewEntity viewEntity = new ViewEntity();
         viewEntity.setName(enquiryEntity.getName());
         viewEntity.setArea(enquiryEntity.getArea());
@@ -148,34 +118,71 @@ public class GymServiceImpl implements GymService {
         return false;
     }
 
-
     @Override
     public boolean saveView(ViewEntity viewEntity) {
         log.info("saveView in ServiceImpl");
-
         boolean saved = repository.saveView(viewEntity);
-        if(saved){
+        if (saved) {
             System.out.println("savedView is saved");
             return true;
         }
         System.out.println("this is not saved");
         return false;
     }
+
     @Override
     public List<ViewEntity> getAllFollowup(int id) {
-        System.out.println("getAllFollowup in serviceImpl:"+repository.getAllData(id));
+        System.out.println("getAllFollowup in serviceImpl:" + repository.getAllData(id));
         return repository.getAllData(id);
     }
 
+
+    //-------------------------------------------------------------------------
+    @Override
+    public boolean getNameByEmail(String email, String password) {
+        log.info("Checking credentials for email: {}", email);
+        return repository.getNameByEmail(email, password);
+    }
+
+    @Override
+    public boolean saveEnquiry(EnquiryDto enquiryDto) {
+        log.info("Saving enquiry for: {}", enquiryDto.getName());
+
+        if (enquiryDto == null) {
+            log.warn("Enquiry data is null!");
+            return false;
+        }
+        EnquiryEntity entity = new EnquiryEntity();
+        entity.setName(enquiryDto.getName());
+        entity.setArea(enquiryDto.getArea());
+        entity.setPhone(enquiryDto.getPhone());
+        entity.setDistance(enquiryDto.getDistance());
+        entity.setAge(enquiryDto.getAge());
+        entity.setStatus(StatusEnum.Enquired.name());
+
+        boolean enquirySaved = repository.saveEnquiry(entity);
+
+        if (enquirySaved) {
+            log.info("Enquiry data saved successfully");
+            return true;
+        } else {
+            log.warn("Failed to save enquiry data");
+            return false;
+        }
+    }
+
+
     @Override
     public boolean saveRegister(RegisterDto registerDto) {
-        System.out.println("saveRegister in GymServiceImpl");
+        log.info("Registering user:", registerDto.getName());
 
+        if (registerDto == null) {
+            log.warn("Register data is null!");
+            return false;
+        }
         RegisterEntity entity = new RegisterEntity();
-
         entity.setName(registerDto.getName());
         entity.setEmail(registerDto.getEmail());
-        //entity.setPassword(registerDto.getPassword());
         entity.setPackages(registerDto.getPackages());
         entity.setTrainer(registerDto.getTrainer());
         entity.setPhone(registerDto.getPhone());
@@ -185,16 +192,19 @@ public class GymServiceImpl implements GymService {
         entity.setPaid(registerDto.getPaid());
         entity.setBalance(registerDto.getBalance());
         entity.setInstallment(registerDto.getInstallment());
+        entity.setLoginCount(-1);
 
-        String randamPassword = generateRandomPassword();
-        entity.setPassword(randamPassword);
+        String generatedPassword = generateRandomPassword();
+        entity.setPassword(generatedPassword);
 
-        boolean isResponse = repository.saveRegister(entity);
-        if (isResponse) {
-            sendEmail(registerDto.getEmail(), randamPassword);
+        boolean isSaved = repository.saveRegister(entity);
+        if (isSaved) {
+            sendEmail(registerDto.getEmail(), generatedPassword);
+            return true;
         }
-        return isResponse;
+        return false;
     }
+
 
     private String generateRandomPassword() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -202,18 +212,18 @@ public class GymServiceImpl implements GymService {
         StringBuilder password = new StringBuilder();
 
         for (int i = 0; i < 8; i++) {
-            int randomIndex = random.nextInt(characters.length());
-            password.append(characters.charAt(randomIndex));
+            password.append(characters.charAt(random.nextInt(characters.length())));
         }
+
         return password.toString();
     }
 
-    //sending email to customer for password
     @Override
     public boolean sendEmail(String email, String password) {
-        System.out.println("this email in serviceImpl ");
-        final String username = "siraganshantamma@gmail.com";
-        final String userPassword = "hhae fwza swyx wlyb";
+        log.info("Sending password email to {}", email);
+
+        final String senderEmail = "siraganshantamma@gmail.com";
+        final String senderPassword = "hhae fwza swyx wlyb";
 
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.gmail.com");
@@ -221,37 +231,34 @@ public class GymServiceImpl implements GymService {
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.starttls.enable", "true");
 
-        Session session = Session.getInstance(prop, new javax.mail.Authenticator() {
+        Session session = Session.getInstance(prop, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, userPassword);
+                return new PasswordAuthentication(senderEmail, senderPassword);
             }
         });
 
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
-            message.setRecipients(
-                    Message.RecipientType.TO,
-                    InternetAddress.parse(email)
-            );
-            message.setSubject("Your password");
-            message.setText("your password: " + password);
-
+            message.setFrom(new InternetAddress(senderEmail));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+            message.setSubject("Your Gym Account Password");
+            message.setText("Your password: " + password);
             Transport.send(message);
 
-            System.out.println("Email sending is Done");
-
+            log.info("Password email sent successfully to {}", email);
+            return true;
         } catch (MessagingException e) {
-            e.printStackTrace();
+            log.error("Failed to send email", e);
+            return false;
         }
-        return false;
     }
 
     @Override
     public boolean updateRegister(RegisterDto registerDto, String name, long phone) {
-        System.out.println("updateRegister in serviceImpl");
+        log.info("Updating registration details for: {}", name);
 
         RegisterEntity entity = repository.updateRegister(name, phone);
+
         if (entity != null) {
             entity.setPackages(registerDto.getPackages());
             entity.setTrainer(registerDto.getTrainer());
@@ -261,8 +268,54 @@ public class GymServiceImpl implements GymService {
             repository.saveRegister(entity);
             return true;
         }
+
+        log.warn("Failed to update registration details for {}", name);
         return false;
+    }
+
+    //------------------------------user login--------------------------------------------
+    @Override
+    public RegisterEntity getEmail(String email, String password) {
+        System.out.println("==========getEmail in serviceImpl================");
+        RegisterEntity entity = repository.userSave(email);
+       System.out.println("===== in Service=======:"+entity);
+//        return res;
+        if (entity != null) {
+            System.out.println("====================:"+entity.toString());
+            if (password.equals(entity.getPassword()) && entity.getLoginCount() == -1) {
+                System.err.println("===============matches==================");
+                return entity;
+            } else if (!(password.equals(entity.getPassword())) && (entity.getLoginCount() >= 0 && entity.getLoginCount() < 3)) {
+                repository.updateCount(email, entity.getLoginCount());
+                System.out.println("password entered is wrong===================");
+                return null;
+            } else if (!(password.equals(entity.getPassword())) && entity.getLoginCount() == 3) {
+                System.out.println("locked");
+                if (entity.getAccountLockedTime() == null) repository.updateLockedAccountTimeByEmail(email);
+                return null;
+            } else if (password.equals(entity.getPassword()) && (entity.getLoginCount() < 3 && entity.getLoginCount() > -1)) {
+                boolean reset = repository.resetCount(email, entity.getLoginCount());
+                if (reset) return entity;
+                else return null;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String resetPassword(String email, String oldPassword, String newPassword, String confirmPassword) {
+
+        System.out.println("reset password in service");
+        if (newPassword.equals(confirmPassword)) {
+            //repository.getEmail(email);
+            String msg = repository.updatePasswordByEmail(email, newPassword);
+        }
+        return "password updated successfully";
     }
 
 
 }
+
+
+
+

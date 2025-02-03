@@ -32,24 +32,31 @@ public interface GymService {
     Long countByPhone(long phone);
     Long countByGymName(String gymName);
 
-
     List<EnquiryEntity> getEnquiries();
     List<EnquiryEntity> getEnquiriesByStatus(String status);
 
-    boolean updateStatusAndReason(String name,String status, String reasons);
     //view page
+    boolean updateStatusAndReason(String name,String status, String reasons);
     boolean saveView(ViewEntity viewDto);
     List<ViewEntity> getAllFollowup(int id);
 
+    //register
     boolean saveRegister(RegisterDto registerDto);
     boolean updateRegister(RegisterDto registerDto,String name,long phone);
 
+    //sending mail to users
     boolean sendEmail(String email, String password);
 
-   // public List<ViewEntity> getAllData(int id);
+    //----------------user login--------------------
 
-
-
+    RegisterEntity getEmail(String email, String password);
+    String resetPassword(String email, String oldPassword, String newPassword,String confirmPassword);
 
 
 }
+
+
+
+
+
+

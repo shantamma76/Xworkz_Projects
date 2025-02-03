@@ -41,6 +41,10 @@
         <input type="email" id="email" name="email" placeholder="Enter your email" class="form-control" required>
       </div>
 
+      <div class="mb-3">
+              <label for="oldPassword" class="form-label">Old Password</label>
+              <input type="password" id="oldPassword" name="oldPassword" placeholder="Enter old password" class="form-control" required>
+            </div>
 
       <div class="mb-3">
         <label for="newPassword" class="form-label">New Password</label>
